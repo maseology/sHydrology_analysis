@@ -13,7 +13,7 @@ library(dygraphs)
 library(xts)
 library(scales)
 
-source("functions/YCDB_API_query.R", local = TRUE)
+source("functions/HYDAT_query.R", local = TRUE)
 
 source("pkg/js.R", local = TRUE)
 source("pkg/html.R", local = TRUE)

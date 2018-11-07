@@ -10,7 +10,7 @@
 ##########################################################
 
 source("pkg/packages.R", local = TRUE)
-sta.id <- 149315 # "04HA001"  # for testing ?sID=2147456361
+sta.id <- "04HA001"
 
 
 shinyApp(
