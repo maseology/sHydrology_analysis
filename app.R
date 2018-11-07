@@ -1,34 +1,34 @@
 ##########################################################
 ##################### sHydrology ######################### 
-#### A Shiny-Leaflet interface to the HYDAT database. ####
+#### A Shiny-Leaflet interface to the YPDT database.  ####
 ##########################################################
 # Hydrological analysis tools
 #
 # By M. Marchildon
-# v.1.0.1
-# Jan 19, 2018
+# v.1.2.1
+# Nov, 2018
 ##########################################################
 
-source("pkg/packages_HYDAT.R", local = TRUE)
+source("pkg/packages.R", local = TRUE)
+sta.id <- 149315 # "04HA001"  # for testing ?sID=2147456361
 
-staID <- '02HB025' ### WSC Station Name
-dbc <- dbcnxn('<...path of Hydat.sqlite3 file goes here...>')
 
 shinyApp(
   ui <- fluidPage(
     useShinyjs(),
-    tags$head(includeCSS("styles.css")),
+    tags$head(includeCSS("pkg/styles.css")),
+    tags$head(tags$script(HTML(jscode.mup))),
     inlineCSS(appLoad),
     
     # Loading message
     div(
-      id = "loading-content", 
+      id = "loading-content",
       div(class='space300'),
       h2("Loading..."),
       div(img(src='ORMGP_logo_no_text_bw_small.png')), br(),
       shiny::img(src='loading_bar_rev.gif')
     ),
-    
+
     # The main app
     hidden(
       div(
@@ -36,40 +36,49 @@ shinyApp(
         list(tags$head(HTML('<link rel="icon", href="favicon.png",type="image/png" />'))),
         div(style="padding: 1px 0px; width: '100%'", titlePanel(title="", windowTitle="sHydrology")),
         navbarPage(
-          #"sHydrology v1.0",
-          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.0"),
-          source(file.path("ui", "main_hydrograph.R"), local = TRUE)$value,
-          source(file.path("ui", "disaggregation.R"), local = TRUE)$value,
+          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.2.1"),
+          source(file.path("ui", "hydrograph.R"), local = TRUE)$value,
           source(file.path("ui", "trend_analysis.R"), local = TRUE)$value,
-          source(file.path("ui", "frequency_analysis.R"), local = TRUE)$value,
-          source(file.path("ui", "flow_regime.R"), local = TRUE)$value,
-          source(file.path("ui", "settings.R"), local = TRUE)$value,
+          source(file.path("ui", "stats.R"), local = TRUE)$value,
+          # source(file.path("ui", "settings.R"), local = TRUE)$value,
           source(file.path("ui", "data_table.R"), local = TRUE)$value,
-          tabPanel("About", shiny::includeMarkdown("md/about.md"))
-        )        
+          source(file.path("ui", "about.R"), local = TRUE)$value
+        )
       )
     )
   ),
   
   server <- function(input, output, session){
-    ### Parameters:
-    sta <- reactiveValues(loc=NULL, id=NULL, name=NULL, name2=NULL, 
-                          carea=NULL, k=NULL, hyd=NULL, DTb=NULL, DTe=NULL, 
-                          label=NULL, info.html=NULL, 
-                          BFbuilt=FALSE, HPbuilt=FALSE)
+    ###################
+    ### Parameters & methods:
+    source("pkg/app_members.R", local = TRUE)$value
     
-    sta.fdc <- reactiveValues(cmplt=NULL,prtl=NULL)
-    sta.mnt <- reactiveValues(cmplt=NULL,prtl=NULL)
-    BFp <- list(LHa=0.925, LHp=3, BFIx=0.8, JHC=0.3) # baseflow parameters
+    
+    ###################
+    ### Load station ID:
+    if(!is.null(sta.id)) collect_hydrograph(sta.id) # for testing
+    # observe({
+    #   query <- parseQueryString(session$clientData$url_search)
+    #   if (!is.null(query[['sID']])) {
+    #     collect_hydrograph(query[['sID']])
+    #   } else {
+    #     showNotification(paste0("Error: URL invalid."))
+    #   }
+    # })
+    
     
     ### sources:
-    source(file.path("server", "main_hydrograph.R"),  local = TRUE)$value
-    source(file.path("server", "disaggregation.R"),  local = TRUE)$value
-    source(file.path("server", "trend_analysis.R"),  local = TRUE)$value
-    source(file.path("server", "frequency_analysis.R"),  local = TRUE)$value
-    # source(file.path("server", "flow_regime.R"),  local = TRUE)$value
-    source(file.path("server", "settings.R"),  local = TRUE)$value # recession coeficient, BF params, etc.
-    source(file.path("server", "data_table.R"),  local = TRUE)$value
+    source(file.path("server/hydrograph", "discharge.R"), local = TRUE)$value
+    source(file.path("server/hydrograph", "separation.R"), local = TRUE)$value
+    source(file.path("server/hydrograph", "disaggregation.R"), local = TRUE)$value
+    source(file.path("server/trend_analysis", "annual.R"), local = TRUE)$value
+    source(file.path("server/trend_analysis", "daily.R"), local = TRUE)$value
+    source(file.path("server/trend_analysis", "baseflow.R"), local = TRUE)$value
+    source(file.path("server/trend_analysis", "cumu.R"), local = TRUE)$value
+    source(file.path("server/statistics", "peak.R"), local = TRUE)$value
+    source(file.path("server/statistics", "mam.R"), local = TRUE)$value
+    source(file.path("server/statistics", "recession.R"), local = TRUE)$value
+    source(file.path("server", "data_table.R"), local = TRUE)$value
     
     session$onSessionEnded(stopApp)
   }

@@ -1,0 +1,27 @@
+### sHydrology packages
+
+library(shiny)
+library(shinyjs)
+library(markdown)
+library(jsonlite)
+library(plyr)
+library(lmomco)
+library(ggplot2)
+library(date)
+library(zoo)
+library(dygraphs)
+library(xts)
+library(scales)
+
+source("functions/YCDB_API_query.R", local = TRUE)
+
+source("pkg/js.R", local = TRUE)
+source("pkg/html.R", local = TRUE)
+source("functions/general.R", local = TRUE)
+source("functions/hydrograph_recession_coef.R", local = TRUE)
+source("functions/hydrograph_separation.R", local = TRUE)
+source("functions/hydrograph_parsing.R", local = TRUE)
+source("functions/hydrograph_parsing_plot.R", local = TRUE)
+source("functions/hydrograph_frequency_analysis.R", local = TRUE)
+source("functions/hydrograph_fdc.R", local = TRUE)
+source("functions/hydrograph_monthly_bar.R", local = TRUE)

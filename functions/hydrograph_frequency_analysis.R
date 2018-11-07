@@ -44,7 +44,7 @@ FrequencyAnalysis <- function(series, distribution, nep = nonexceeds()) {
           name = distribution,
           logTransformed = transformed,
           parameters = distPar),
-        output = data.frame(nep = nep, rp = prob2T(nep), estimate = quant) 
+        output = data.frame(nep = nep, rp = prob2T(nep), estimate = quant)
       ) )
     
   } else {
@@ -136,10 +136,17 @@ BootstrapCI <- function(series, distribution, n.resamples=1E3, nep=nonexceeds(),
 
 #########################################################################
 
-frequencyPlot <- function(series, ci, title=NULL) {
+frequencyPlot <- function(series, ci, title=NULL, inverted=FALSE) {
 
   # determine plotting positions
-  bwpeaks <- data.frame(PROB = pp(series, sort = FALSE), FLOW = series)
+  if(inverted) {
+    bwpeaks <- data.frame(PROB = 1-pp(series, sort = FALSE), FLOW = series)
+    nep <- 1-ci$nonexceed_prob
+  } else {
+    bwpeaks <- data.frame(PROB = pp(series, sort = FALSE), FLOW = series)
+    nep <- ci$nonexceed_prob
+  }
+  
   xbreaks <- c(0.002,0.01,0.1,0.25,0.5,0.8,0.9,0.95,0.975,0.99,0.995, 0.998)
   log.range <- log10(range(series, ci[,ncol(ci)], na.rm = TRUE)) #ci[,1]
   lower <- 10^floor(log.range[1])
@@ -155,13 +162,13 @@ frequencyPlot <- function(series, ci, title=NULL) {
   p <- ggplot(bwpeaks) + 
     geom_point(aes(x=PROB, y=FLOW)) + 
     theme_bw() + 
-    scale_y_continuous(trans="log10", breaks=ybreaks, name="Discharge (m³/s)") +
+    scale_y_continuous(trans="log10", breaks=ybreaks, name=gglabcms) +
     scale_x_continuous(trans=probability_trans(distribution="norm"),
                        breaks=xbreaks, labels=signif(prob2T(xbreaks), digits=3),
                        name="Return period (years)") +
-    geom_line(data=ci, aes(x=nonexceed_prob, y=true), color="red") +
-    geom_line(data=ci, aes(x=nonexceed_prob, y=lower), color="red", lty=2) +
-    geom_line(data=ci, aes(x=nonexceed_prob, y=upper), color="red", lty=2)
+    geom_line(data=ci, aes(x=nep, y=true), color="red") +
+    geom_line(data=ci, aes(x=nep, y=lower), color="red", lty=2) +
+    geom_line(data=ci, aes(x=nep, y=upper), color="red", lty=2)
   
   if(!is.null(title)) p <- p + ggtitle(title)
   

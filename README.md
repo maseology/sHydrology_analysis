@@ -5,7 +5,7 @@ Currently built to view WSC HYDAT (sqlite3 format) stream flow data [click here]
 
 Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf).
 
-### Current functionality (version 1.0.1):
+### Current functionality (version 1.2.1):
  * View entire stream flow timeseries
  * Dynamic hydrograph zooming:
 	 * drag-and-click zoom
@@ -13,7 +13,7 @@ Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf).
 	 * optionnally use date picker
  * Perform as suite of hydrograph separation algorithms (14 in total, see below)
 	 * display min/max range (green band) and median separated baseflow (dotted line)
- * Perform automatic hydrograph parsing to isolate rising/falling limbs, and stream flow recession  
+ * Perform automatic hydrograph dis-aggregation to isolate rising/falling limbs, and stream flow recession  
  * Perform flow frequency & flow regime analyses
  * Automatic recession coefficient computation
  * View data as a table, and export data as *.csv 
@@ -121,7 +121,7 @@ Run *app.R* externally such that the app will open on your default web browser. 
 The *'Hydat.sqlite3'* file is roughly 1GB in size and thus cannot be hosted on GitHub.
 
 
-## Current version: 1.0.1
+## Current version: 1.2.1
 **Task list:**
 
  - [x] Build main Leaflet/Shiny interface
@@ -132,7 +132,9 @@ The *'Hydat.sqlite3'* file is roughly 1GB in size and thus cannot be hosted on G
  - [x] Flow duration curve/return periods
  - [x] Peak flow frequency/return periods
  - [ ] Tests for stationarity (Mann-Kendall, double-mass, etc.)
- - [ ] Drought indices (i.e., MDSI, low flow frequency)
+ - [x] Low flow frequency/return period analysis
+ - [ ] Drought indices (i.e., MDSI)
+ - [ ] Incorporation of catchment precipitation
  - [x] Hydrograph parsing (rising limb, falling limb, baseflow recession)
  - [x] Continuous to discrete hydrograph translation
 
@@ -146,10 +148,32 @@ Mason Marchidon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwater
 
 ### Release notes
 
-version 1.0.1 - 2018-01-16
+**version 1.2.1 - 2018-11-07**
+
+bug fix: axis labelling
+reorganized code for better HYDAT integration
+added description to stream flow recession coefficient
+fixed stream flow recession coefficient button actions
+fixed hydrograph parsing bugs
+updated about page
+
+**version 1.2 - 2018-05-15**
+
+code reorganization
+
+**version 1.1 - 2018-05-04**
+
+1. general tab reorganization
+2. using optimized APIs for quicker data access
+3. added BFI to cumulative plots
+4. bug fixes
+
+**version 1.0.1 - 2018-01-16**
+
 fixed bug where contributing area = 0 cause plot failure
 
-version 1.0 - 2018-01-12
+**version 1.0 - 2018-01-12**
+
 initial release
 
 ## References

@@ -3,7 +3,7 @@
 ##########################################################
 # By M. Marchildon
 #
-# Dec 11, 2017
+# May 4, 2018
 ##########################################################
 
 
@@ -55,14 +55,12 @@ recession_coef_plot <- function(Flow, k=NULL, title=NULL){
   t1 <- paste0('recession coefficient: ',round(k,3),'; n = ',length(RP$Q))
   p <- ggplot(RP, aes(x = Qp1, y = Q)) +
         theme_bw() + theme(panel.grid.minor = element_line(colour="grey90", size=0.5)) +
-        #geom_abline(slope=1/k,intercept=0, color="orange",size=2) +
         geom_segment(aes(x=rng[1],xend=rng[2],y=rng[1],yend=rng[2]/k), color="orange",size=2) +
         geom_point(size=2, colour='blue', alpha=0.2) +
-        #geom_abline(slope=1/k,intercept=0, size=0.5) +
         geom_segment(aes(x=rng[1],xend=rng[2],y=rng[1],yend=rng[2]/k), size=0.5) +
         scale_x_log10(minor_breaks = mb) + scale_y_log10(minor_breaks = mb) + 
         annotate("text", x=0.9*rng[2], y=1.3*rng[1], label=t1, hjust=1,vjust=1,size=4) +
-        labs(x = "Discharge (day after)", y = "Discharge (m³/s)")
+        labs(x = "Discharge (day after)", y = gglabcms)
   
   if(!is.null(title)) p <- p + ggtitle(title)
   
@@ -77,11 +75,11 @@ recession_coef_plot <- function(Flow, k=NULL, title=NULL){
 flow_summary_annual <- function(hyd,carea,k=NULL,title=NULL,relative=FALSE){
   if (!"BF.med" %in% colnames(hyd)){hyd <- baseflow_range(hyd,carea,k)}
   hyd$yr <- as.numeric(format(hyd$Date, "%Y"))
-  unit <- 'm³/s'
+  unit <- expression('Discharge ' ~ (m^3/s))
   if(!is.null(carea)){
     hyd$BF.med <- hyd$BF.med * 31557.6/carea # mm/yr
     hyd$Flow <- hyd$Flow * 31557.6/carea # mm/yr
-    unit <- 'mm/yr'
+    unit <- expression('Discharge ' ~ (mm/yr))
   }
 
   mQ <- mean(hyd$Flow, na.rm=TRUE)
@@ -107,7 +105,7 @@ flow_summary_annual <- function(hyd,carea,k=NULL,title=NULL,relative=FALSE){
       annotate("text", x=min(hyd$yr), y=mBF, label=paste0("mean baseflow discharge = ",round(mBF,0),unit), hjust=0,vjust=-1,size=4) +
       labs(y = paste0("Discharge (",unit,")"), x=NULL)
   }else{
-    p <- p + labs(y = paste0("Relative discharge (",unit,")"), x=NULL)
+    p <- p + labs(y = unit, x=NULL)
   }
   if(!is.null(title)) p <- p + ggtitle(title)
 
@@ -162,11 +160,11 @@ flow_monthly_bar_build <- function(hyd,carea=NULL,DTrng=NULL){
 flow_summary_daily <- function(hyd,carea,k=NULL,title=NULL,DTrng=NULL){
   if (!"BF.med" %in% colnames(hyd)){hyd <- baseflow_range(hyd,carea,k)}
   hyd$doy <- as.numeric(format(hyd$Date, "%j"))
-  unit <- 'm³/s'
+  unit <- expression('Discharge ' ~ (m^3/s))
   if(!is.null(carea)){
     hyd$BF.med <- hyd$BF.med * 31557.6/carea # mm/yr
     hyd$Flow <- hyd$Flow * 31557.6/carea # mm/yr    
-    unit <- 'mm/yr'
+    unit <- expression('Discharge ' ~ (mm/yr))
   }
 
   if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
@@ -184,7 +182,7 @@ flow_summary_daily <- function(hyd,carea,k=NULL,title=NULL,DTrng=NULL){
       geom_area(aes(y=dQ,fill='Total Flow')) + geom_area(aes(y=dBF,fill='Baseflow')) +
       scale_fill_manual(values=c("Total Flow" = "#ef8a62", "Baseflow" = "#43a2ca"), guide=guide_legend(reverse=T)) +
       scale_x_date(date_labels="%b", date_breaks = 'month') +
-      labs(y = paste0("Discharge (",unit,")"), x='Day of year')
+      labs(y = unit, x='Day of year')
   
   if(!is.null(title)) p <- p + ggtitle(title)
   
@@ -194,20 +192,37 @@ flow_summary_daily <- function(hyd,carea,k=NULL,title=NULL,DTrng=NULL){
 flow_summary_cumu <- function(hyd,carea,title=NULL,DTrng=NULL){
   if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
   if(!is.null(carea)){
-    df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86.4/carea)
-    unit = 'mm'
+    df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86.4/carea, b=cumsum(hyd$BF.med)*86.4/carea)
+    unit = expression('Cumulative streamflow ' ~ (mm))
   }else{
-    df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86400)
-    unit = 'm³'
+    df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86400, b=cumsum(hyd$BF.med)*86400)
+    unit = expression('Cumulative streamflow ' ~ (m^3))
   }
   
-  p <- ggplot(df,aes(d,c)) +
+  p <- ggplot(df, aes(d)) +
         theme_bw() + theme(legend.position=c(0.03,0.97), legend.justification=c(0,1), legend.title=element_blank()) +
-        geom_line(aes(color="Actual"),size=2) +
-        geom_segment(aes(x=min(d),xend=max(d),y=0,yend=max(c), color="Long term average"),size=1.25,linetype="dashed") + 
-        scale_colour_manual(values=c("Actual"="orange", "Long term average"="blue")) +
-        labs(x = NULL, y = "Cumulative streamflow (",unit,")") +
+        geom_line(aes(y=c, color="Total Flow"),size=2) +
+        geom_line(aes(y=b, color="Baseflow"),size=2) +
+        geom_segment(aes(x=min(d),xend=max(d),y=0,yend=max(c)),size=1,linetype="dotted") + 
+        geom_segment(aes(x=min(d),xend=max(d),y=0,yend=max(b)),size=1,linetype="dotted") + 
+        scale_colour_manual(values=c("Total Flow" = "#ef8a62", "Baseflow" = "#43a2ca")) +
+        labs(x = NULL, y = unit) +
         scale_x_date()
+  
+  if(!is.null(title)) p <- p + ggtitle(title)
+  
+  return(p) 
+}
+
+flow_summary_cumu_bf <- function(hyd,carea,title=NULL,DTrng=NULL){
+  if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
+  df <- data.frame(d=hyd$Date, b=rollmean(hyd$BF.med/hyd$Flow, 365, fill=NA))
+  
+  p <- ggplot(df, aes(d,b)) +
+    theme_bw() + #theme(legend.position=c(0.03,0.97), legend.justification=c(0,1), legend.title=element_blank()) +
+    geom_line() +
+    labs(x = NULL, y = "Baseflow Index (BFI)") +
+    scale_x_date()
   
   if(!is.null(title)) p <- p + ggtitle(title)
   
@@ -222,10 +237,10 @@ baseflow_boxplot <- function(hyd,carea,k=NULL,title=NULL, DTrng=NULL){
   if (!"BF.med" %in% colnames(hyd)){hyd <- baseflow_range(hyd,carea,k)}
   hyd$mnt <- format(hyd$Date, "%b")
   hyd$mnt <- as.factor(hyd$mnt)
-  unit <- 'm³/s'
+  unit <- expression('Baseflow discharge ' ~ (m^3/s))
   if(!is.null(carea)){
     hyd$BF.med <- hyd$BF.med * 2592/carea # mm/30 days
-    unit <- 'mm/month'
+    unit <- expression('Baseflow discharge ' ~ (mm/month))
   }
   
   if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
@@ -241,7 +256,7 @@ baseflow_boxplot <- function(hyd,carea,k=NULL,title=NULL, DTrng=NULL){
         theme_bw() +
         geom_boxplot(outlier.shape = NA) +
         coord_cartesian(ylim = c(0,max(m1[,5]))*1.05) +
-        labs(x=NULL,y = paste0("Baseflow discharge (",unit,")"), title=NULL)
+        labs(x=NULL,y = unit, title=NULL)
   
   if(!is.null(title)) p <- p + ggtitle(title)
   
@@ -303,7 +318,7 @@ peak_flow_histogram <- function(hyd, title=NULL){
   p <- ggplot(df,aes(peak)) +
     theme_bw() +
     geom_density(colour='blue', size=1, fill='blue', alpha=0.2) +
-    labs(x='Annual maximum daily discharge (m³/s)', title=NULL)
+    labs(x=expression('Annual maximum daily discharge ' ~ (m^3/s)), title=NULL)
   
   if(!is.null(title)) p <- p + ggtitle(title)
   
@@ -319,7 +334,7 @@ flow_duration_curve <- function(pg1,pg2=NULL) {
     theme(legend.position=c(0.97,0.97), legend.justification=c(1,1), legend.title=element_blank()) +
     geom_step(data=pg1, aes(x = x, y = (1-y)*100, color="complete data range"), size=2.5) +
     coord_flip() + scale_x_log10() +
-    labs(x = "Discharge (m³/s)", y = "Exceedance frequency (%)")
+    labs(x = gglabcms, y = "Exceedance frequency (%)")
   
   if(!is.null(pg2)){
     p <- p + geom_step(data=pg2, aes(x = x, y = (1-y)*100, color="selected data range"), size=2) +
@@ -348,7 +363,7 @@ flow_duration_curve_build <- function(hyd,DTrng=NULL){
 
 
 ########################################################
-# Flow Duration Curve
+# Flow disaggregation
 ########################################################
 flow_hydrograph_parsed <- function(hyd,InclEV=TRUE){
   
@@ -368,14 +383,14 @@ flow_hydrograph_parsed <- function(hyd,InclEV=TRUE){
   if(InclEV){
     xe <- xts(hyd$evnt, order.by = hyd$Date)
     qx <- cbind(x1,x2,x4,xe)
-    colnames(qx) <- c('falling limb','recession','rising limb','event volume')
+    colnames(qx) <- c('falling limb','recession','rising limb','event yield')
     p <- dygraph(qx) %>%
       dySeries("recession", color = "green",strokeWidth=2, fillGraph = TRUE) %>%
       dySeries("falling limb", color = "blue",strokeWidth=2, fillGraph = TRUE) %>%
       dySeries("rising limb", color = "red",strokeWidth=2, fillGraph = TRUE) %>%
-      dyBarSeries("event volume", color = "brown", axis = 'y2') %>%
-      dyAxis('y', label='Discharge (m³/s)') %>%
-      dyAxis('y2', label='Event volume (mm)', valueRange = c(max(hyd$evnt,na.rm=T), 0)) %>%
+      dyBarSeries("event yield", color = "brown", axis = 'y2') %>%
+      dyAxis('y', label=gglabcms) %>%
+      dyAxis('y2', label='Event yield (mm)', valueRange = c(max(hyd$evnt,na.rm=T), 0)) %>%
       dyLegend(show = 'always') %>%  
       dyOptions(axisLineWidth = 1.5, fillAlpha = 0.5, stepPlot = FALSE) %>%
       dyLegend(width = 500) %>%
@@ -387,7 +402,7 @@ flow_hydrograph_parsed <- function(hyd,InclEV=TRUE){
       dySeries("recession", color = "green",strokeWidth=2, fillGraph = TRUE) %>%
       dySeries("falling limb", color = "blue",strokeWidth=2, fillGraph = TRUE) %>%
       dySeries("rising limb", color = "red",strokeWidth=2, fillGraph = TRUE) %>%
-      dyAxis('y', label='Discharge (m³/s)') %>%
+      dyAxis('y', label=gglabcms) %>%
       dyLegend(show = 'always') %>%  
       dyOptions(axisLineWidth = 1.5, fillAlpha = 0.5, stepPlot = FALSE) %>%
       dyLegend(width = 500) %>%

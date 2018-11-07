@@ -1,4 +1,4 @@
-tabPanel("Data table",
+tabPanel("Download data",
   sidebarPanel(
    dateRangeInput("tabRng", label = "Date range"),
    checkboxInput("tabCmplt", "Include all computations", FALSE),

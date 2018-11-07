@@ -1,47 +1,14 @@
-navbarMenu("Trend analysis",
+navbarMenu("Longterm trend analysis",
    tabPanel("annual flow summary",
-            fluidPage(
-              headerPanel('Annual flow summary'),
-              column(6, plotOutput('yr.q')),
-              column(6, plotOutput('yr.q.rel'))
-            )
+            source(file.path("ui/trend_analysis", "annual.R"), local = TRUE)$value
    ),
-   tabPanel("mean-daily discharge",
-            pageWithSidebar(
-              headerPanel('Mean-daily discharge'),
-              sidebarPanel(
-                h4("select date range:"),
-                dygraphOutput("rng.mdd")
-              ),
-              mainPanel(
-                plotOutput('dy.q')
-              )
-            )
-   ),
+   # tabPanel("mean-daily discharge",
+   #          source(file.path("ui/trend_analysis", "daily.R"), local = TRUE)$value
+   # ),
    tabPanel("monthly baseflow",
-            fluidPage(
-              headerPanel('Monthly range in baseflow'),
-              sidebarPanel(
-                h4("select date range:"),
-                dygraphOutput("rng.bf")
-              ),
-              mainPanel(
-                column(6, plotOutput('BF.mnt')),
-                column(6, plotOutput('BFI.mnt'))
-              )
-            ),
-            shiny::includeMarkdown("md/bfmntnotes.md")
+            source(file.path("ui/trend_analysis", "baseflow.R"), local = TRUE)$value
    ),
    tabPanel("cumulative discharge",
-            pageWithSidebar(
-              headerPanel('Cumulative discharge'),
-              sidebarPanel(
-                h4("select date range:"),
-                dygraphOutput("rng.cd")
-              ),
-              mainPanel(
-                plotOutput('cum.q')
-              )
-            )
+            source(file.path("ui/trend_analysis", "cumu.R"), local = TRUE)$value
    )
 )
