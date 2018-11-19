@@ -10,7 +10,7 @@ Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf).
  * Dynamic hydrograph zooming:
 	 * drag-and-click zoom
 	 * double-click to full extent
-	 * optionnally use date picker
+	 * optionally use date picker
  * Perform as suite of hydrograph separation algorithms (14 in total, see below)
 	 * display min/max range (green band) and median separated baseflow (dotted line)
  * Perform automatic hydrograph dis-aggregation to isolate rising/falling limbs, and stream flow recession  
