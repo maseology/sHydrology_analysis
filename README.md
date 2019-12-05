@@ -3,9 +3,9 @@ A Shiny-Leaflet interface to a stream flow database and companion to [sHydrology
 
 Currently built to view WSC HYDAT (sqlite3 format) stream flow data [click here](http://collaboration.cmc.ec.gc.ca/cmc/hydrometrics/www/).
 
-Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf).
+Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf). *(to be updated)*
 
-### Current functionality (version 1.2.1):
+### Current functionality (version 1.2.4):
  * View entire stream flow timeseries
  * Dynamic hydrograph zooming:
 	 * drag-and-click zoom
@@ -16,6 +16,7 @@ Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf).
  * Perform automatic hydrograph dis-aggregation to isolate rising/falling limbs, and stream flow recession  
  * Perform flow frequency & flow regime analyses
  * Automatic recession coefficient computation
+ * E-Flow/flow regime analysis tools
  * View data as a table, and export data as *.csv 
 
 ### Screenshot:
@@ -121,14 +122,14 @@ Run *app.R* externally such that the app will open on your default web browser. 
 The *'Hydat.sqlite3'* file is roughly 1GB in size and thus cannot be hosted on GitHub.
 
 
-## Current version: 1.2.1
+## Current version: 1.2.4
 **Task list:**
 
  - [x] Build main Leaflet/Shiny interface
  - [x] Write hydrograph separation routines
  - [ ] Add user-definable parameter adjustment
  - [x] Add flow summary section
- - [ ] Write ecological/environment flow (E-Flow) statistics
+ - [x] Write ecological/environment flow (E-Flow) statistics
  - [x] Flow duration curve/return periods
  - [x] Peak flow frequency/return periods
  - [ ] Tests for stationarity (Mann-Kendall, double-mass, etc.)
@@ -147,6 +148,13 @@ sHydrology hosted on GitHub is released under the MIT license.
 Mason Marchidon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwater Program](http://oakridgeswater.ca/)
 
 ### Release notes
+
+**version 1.2.4 - 2019-12-05**
+
+general improvements
+added Indicators of Hydrologic Alteration (IHA) *(modified from https://rdrr.io/rforge/IHA/)*
+added first-order (inverse) hyperbolic stream flow recession coefficient computation
+added capability to ingest precipitation *(not available in HYDAT mode)*
 
 **version 1.2.1 - 2018-11-07**
 

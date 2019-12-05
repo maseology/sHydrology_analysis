@@ -1,5 +1,6 @@
 
 fluidRow(
+  withMathJax(),
   htmlOutput("hdr0"), br(),
   dygraphOutput("hydgrph.bf"), br(),
   column(2),

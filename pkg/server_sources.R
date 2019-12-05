@@ -1,0 +1,13 @@
+source(file.path("server/hydrograph", "discharge.R"), local = TRUE)$value
+source(file.path("server/hydrograph", "separation.R"), local = TRUE)$value
+source(file.path("server/hydrograph", "disaggregation.R"), local = TRUE)$value
+source(file.path("server/trend_analysis", "annual.R"), local = TRUE)$value
+source(file.path("server/trend_analysis", "daily.R"), local = TRUE)$value
+source(file.path("server/trend_analysis", "seasonal.R"), local = TRUE)$value
+source(file.path("server/trend_analysis", "cumu.R"), local = TRUE)$value
+source(file.path("server/statistics", "peak.R"), local = TRUE)$value
+source(file.path("server/statistics", "mam.R"), local = TRUE)$value
+source(file.path("server/statistics", "iha.R"), local = TRUE)$value
+source(file.path("server/statistics", "recession.R"), local = TRUE)$value
+source(file.path("server/data", "data_table.R"), local = TRUE)$value
+source(file.path("server/data", "data_qual.R"), local = TRUE)$value

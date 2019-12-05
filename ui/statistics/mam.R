@@ -25,6 +25,7 @@ fluidPage(
     column(4, plotOutput('mam.q1')),
     column(4, plotOutput('mam.q7')),
     column(4, plotOutput('mam.q30')) 
-  ), br(), 
+  ), br(),
+  shiny::includeMarkdown("md/rightclick.md"), 
   shiny::includeMarkdown("md/mamnotes.md")
 )

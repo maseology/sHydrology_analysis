@@ -19,7 +19,7 @@ output$hydgrph.bf <- renderDygraph({
     isolate(
       if (!is.null(sta$hyd)){
         if (!sta$BFbuilt) separateHydrograph()
-        build_hydrograph(c('Flow','BF.min','BF.max'))
+        build_hydrograph(c('Flow','BF.min','BF.max','BF.med'))
       }
     )
   }
@@ -27,16 +27,26 @@ output$hydgrph.bf <- renderDygraph({
 })
 
 build_hydrograph <- function(sset){
-  # sset <- c('Flow','BF.min','BF.max')
   qxts <- xts(sta$hyd[,sset], order.by = sta$hyd$Date)
   showNotification('plot rendering, please be patient..', duration = 10)
-  p <- dygraph(qxts) %>%
-    dySeries(c('BF.min','Flow','BF.max'),label='Discharge',strokeWidth=3) %>%
-    dyOptions(axisLineWidth = 1.5) %>%
-    dyAxis(name='y', label=dylabcms) %>%
-    dyLegend(width = 500) %>%
-    dyRangeSelector(height=80)
-  
+  if ('BF.med' %in% sset) {
+    p <- dygraph(qxts) %>%
+      dySeries(c('BF.min','Flow','BF.max'),label='Discharge',strokeWidth=3) %>%
+      dySeries('BF.med',label='Median baseflow',strokeWidth=1) %>%
+      dyOptions(axisLineWidth = 1.5) %>%
+      dyAxis(name='y', label=dylabcms) %>%
+      dyLegend(width = 500) %>%
+      dyRangeSelector(height=80)
+  } else {
+    p <- dygraph(qxts)  %>%
+      dyHighlight(highlightSeriesOpts = list(strokeWidth = 3)) %>%
+      dySeries(c('BF.min','Flow','BF.max'),label='Discharge',strokeWidth=3) %>%
+      dyOptions(axisLineWidth = 1.5) %>%
+      dyAxis(name='y', label=dylabcms) %>%
+      dyLegend(width = 500) %>%
+      dyRangeSelector(height=80)
+  }
+
   return(p)
 }
 

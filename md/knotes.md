@@ -1,8 +1,8 @@
-#### Automated stream flow recession coefficient computation:
+#### Automated stream flow (linear decay) recession coefficient computation:
 
 The stream flow recession coefficient (k), describes the withdrawal of water from storage within the watershed (Linsley et.al., 1975).  The recession coefficient is a means of determining the amount baseflow recedes after a given period of time:
 
-<center>![equation](http://www.sciweavers.org/tex2img.php?eq=b_t%3Dkb_%7Bt-1%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)</center>
+$$ b_t=kb_{t-1} $$
 
 where *b<sub>t−1</sub>* represents the stream flow calculated at one time step prior to *b<sub>t</sub>*. (Note, this assumes that total flow measurements are reported at equal time intervals, when unequal intervals are used, *k∆t* must be used, where *∆t* is the time interval between successive *b* calculations relative to the time step *k* was calculated at.)
 
@@ -14,6 +14,22 @@ The recession coefficient is computed automatically using an iterative procedure
 
 By updating the plot to a user-defined stream flow recession coefficient, all *k*-dependent calculations used on the sHydrology web app will be affected; otherwise the automated recession coefficient is used by default.
 
+<br><br>
+
+#### Automated first-order (inverse) hyperbolic stream flow recession coefficient computation:
+
+An alternative variant to the recession coefficient that assumes that stream flow follows an inverse hyperbolic function of the form: $$ \frac{1}{Q}-\frac{1}{Q_0}=\frac{t}{m} $$
+
+where *1/Q* is the inverse discharge and *1/Q<sub>0</sub>* is the inverse of discharge at the beginning of a period of stream flow recession. The inverse of the slope of this function yields a first-cut estimate of the *m* parameter used in TOPMODEL (Beven and Kirkby, 1979).
+
+![from Beven (2012)](images/topmodel_m.png)
+
+This equation is solved by isolating a number of recession events that appear to fit a similar trend. These inverted stream flow recession events are then plotted against the duration of the event and a final linear regression model is determined. The regression model should only be used when it appears that the underlying recession curves are roughly parallel to the final regression line.
+
 #### References
 
-Linsley, R.K., M.A. Kohler, J.L.H. Paulhus, 1975. Hydrology for Engineers 2 nd ed. McGraw-Hill. 482pp.
+Beven, K.J., M.J. Kirkby, 1979. A physically based, variable contributing area model of basin hydrology. Hydrological Sciences Bulletin 24(1): 43-69.
+
+Beven, K.J., 2012. Rainfall-Runoff modelling: the primer, 2\textsuperscript{nd} ed. John Wiley \& Sons, Ltd. 457pp.
+
+Linsley, R.K., M.A. Kohler, J.L.H. Paulhus, 1975. Hydrology for Engineers 2<sup>nd</sup> ed. McGraw-Hill. 482pp.

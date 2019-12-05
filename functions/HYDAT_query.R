@@ -157,7 +157,7 @@ qTemporal <- function(dbc,staID){
   hyd <- data.frame(Date,Flow,Flag)
   hyd <- hyd[!is.na(hyd$Date),]
   hyd <- hyd[!is.na(hyd$Flow),]
-  return(hyd)
+  return(list(hyd, NULL))
 }
 
 

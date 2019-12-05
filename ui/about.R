@@ -4,6 +4,7 @@
 
 
 tabPanel("About",
+  withMathJax(),
   fluidPage(
     column(2),
     column(8, 

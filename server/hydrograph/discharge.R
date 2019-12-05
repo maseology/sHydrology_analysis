@@ -37,33 +37,57 @@ output$info.main <- renderUI({
 ######################
 output$hydgrph <- renderDygraph({
   wflg <- input$chk.flg
+  wyld <- input$chk.yld
   if (!is.null(sta$hyd)){
     if(!wflg){
-      qxts <- xts(sta$hyd$Flow, order.by = sta$hyd$Date)
-      colnames(qxts) <- 'Discharge'
-      dygraph(qxts) %>%
-        dyOptions(axisLineWidth = 1.5, fillGraph = TRUE, stepPlot = TRUE) %>%
-        dyAxis(name='y', label=dylabcms) %>%
-        dyRangeSelector(strokeColor = '', height=80) 
+      if (wyld && !is.null(sta$intrp)){
+        qFlw <- xts(sta$hyd$Flow, order.by = sta$hyd$Date)
+        qPre <- xts(sta$intrp$yld, order.by = sta$intrp$Date)
+        qSim <- xts(sta$intrp$sim, order.by = sta$intrp$Date)
+        qx <- cbind(qFlw,qSim,qPre)
+        colnames(qx) <- c('Observed','Simulated','Atmospheric yield')
+        dygraph(qx) %>%
+          dySeries("Observed", color = "blue") %>%
+          dySeries("Simulated", color = "red", strokePattern='dotted') %>%
+          # dyBarSeries("Atmospheric yield", axis = 'y2') %>%  ### BUG: these don't seem to appear as of 191126
+          dySeries("Atmospheric yield", axis = 'y2', color="#008080", stepPlot = TRUE, fillGraph = TRUE) %>%
+          dyAxis('y', label=dylabcms) %>%
+          dyAxis('y2', label='Atmospheric yield (mm)', valueRange = c(100, 0)) %>%
+          dyRangeSelector(strokeColor = '', height=80) %>%
+          dyOptions(retainDateWindow = TRUE)
+      } else {
+        qxts <- xts(sta$hyd$Flow, order.by = sta$hyd$Date)
+        colnames(qxts) <- 'Discharge'
+        dygraph(qxts) %>%
+          dyOptions(axisLineWidth = 1.5, fillGraph = TRUE, stepPlot = TRUE) %>%
+          dyAxis(name='y', label=dylabcms) %>%
+          dyRangeSelector(strokeColor = '', height=80) %>%
+          dyOptions(retainDateWindow = TRUE)        
+      }
     }else{
       hIce <- data.frame(Date = sta$hyd$Date,q = sta$hyd$Flow,flg = sta$hyd$Flag)
       hIce[hIce$flg!='ice_conditions',]$q <- NA
       hEst <- data.frame(Date = sta$hyd$Date,q = sta$hyd$Flow,flg = sta$hyd$Flag)
-      hEst[hIce$flg!='estimate',]$q <- NA
+      hEst[hEst$flg!='estimate',]$q <- NA
+      hRaw <- data.frame(Date = sta$hyd$Date,q = sta$hyd$Flow,flg = sta$hyd$Flag)
+      hRaw[hRaw$flg!='realtime_uncorrected',]$q <- NA
       
       x1 <- xts(hIce$q, order.by = hIce$Date)
       x2 <- xts(hEst$q, order.by = hEst$Date)
+      x3 <- xts(hRaw$q, order.by = hRaw$Date)
       xm <- xts(sta$hyd$Flow, order.by = sta$hyd$Date)
       
-      qxts <- cbind(xm, x1, x2)
-      colnames(qxts) <- c('Discharge','Ice conditions','Estimate')
+      qxts <- cbind(xm, x1, x2, x3)
+      colnames(qxts) <- c('Discharge','Ice conditions','Estimate','Uncorrected')
       dygraph(qxts) %>%
-        dySeries("Discharge", stepPlot = TRUE, fillGraph = TRUE, color = "#008080") %>%
+        dySeries("Discharge", stepPlot = TRUE, fillGraph = TRUE, color = "blue") %>%
         dySeries("Ice conditions", stepPlot = TRUE, fillGraph = TRUE, color = "#ffa552", drawPoints=TRUE, strokeWidth=3) %>%
         dySeries("Estimate", stepPlot = TRUE, fillGraph = TRUE, color = "#008000", drawPoints=TRUE, strokeWidth=3) %>%
+        dySeries("Uncorrected", stepPlot = TRUE, fillGraph = TRUE, color = "#6635b5", drawPoints=TRUE, strokeWidth=3) %>%
         dyOptions() %>%
         dyAxis(name='y', label=dylabcms) %>%
-        dyRangeSelector(strokeColor = '', height=80)
+        dyRangeSelector(strokeColor = '', height=80) %>%
+        dyOptions(retainDateWindow = TRUE)
     }
   }
 })

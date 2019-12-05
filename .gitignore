@@ -2,6 +2,8 @@
 *.sqlite3
 *.Rproj
 YCDB_API_query.R
+YCDB_query.R
+test.R
 
 # History files
 .Rhistory
@@ -36,3 +38,4 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+.Rproj.user

@@ -27,7 +27,8 @@ output$mam.q1 <- renderPlot({
     nrsm <- input$mam.rsmpl
     ci <- input$mam.ci
     if (!is.null(sta$hyd)){
-      withProgress(message = 'rendering plot 1 of 3..', value = 0.1, {mam_frequency(sta$hyd, mdl, 1, nrsm, ci, 'Annual extreme minimum (1-day MAM)')})
+      
+      withProgress(message = 'rendering plot 1 of 3..', value = 0.1, {mam_frequency(sta$hyd, mdl, 1, nrsm, ci, paste0(sta$label,'\nannual extreme minimum (1-day MAM)'))})
     }
   })
 })
@@ -39,7 +40,7 @@ output$mam.q7 <- renderPlot({
     nrsm <- input$mam.rsmpl
     ci <- input$mam.ci
     if (!is.null(sta$hyd)){
-      withProgress(message = 'rendering plot 2 of 3..', value = 0.5, {mam_frequency(sta$hyd, mdl, 7, nrsm, ci, '7-day MAM')})
+      withProgress(message = 'rendering plot 2 of 3..', value = 0.5, {mam_frequency(sta$hyd, mdl, 7, nrsm, ci, paste0(sta$label,'\n7-day MAM'))})
     }
   })
 })
@@ -51,7 +52,7 @@ output$mam.q30 <- renderPlot({
     nrsm <- input$mam.rsmpl
     ci <- input$mam.ci
     if (!is.null(sta$hyd)){
-      withProgress(message = 'rendering plot 3 of 3..', value = 0.8, {mam_frequency(sta$hyd, mdl, 30, nrsm, ci, '30-day MAM')})
+      withProgress(message = 'rendering plot 3 of 3..', value = 0.8, {mam_frequency(sta$hyd, mdl, 30, nrsm, ci, paste0(sta$label,'\n30-day MAM'))})
     }
   })
 })

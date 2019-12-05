@@ -24,5 +24,6 @@ fluidPage(
   fluidRow(
     column(6, plotOutput('pk.q')),
     column(6, plotOutput('pk.dist')) 
-  )
+  ), br(),
+  shiny::includeMarkdown("md/rightclick.md")
 )

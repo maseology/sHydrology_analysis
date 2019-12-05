@@ -9,7 +9,7 @@ baseflow_boxplot <- function(hyd,carea,k=NULL,title=NULL, DTrng=NULL){
   unit <- 'm?/s'
   if(!is.null(carea)){
     hyd$BF.med <- hyd$BF.med * 2592/carea # mm/30 days
-    unit <- 'mm/month'
+    unit <- 'mm' #'mm/month'
   }
   
   if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
@@ -25,7 +25,7 @@ baseflow_boxplot <- function(hyd,carea,k=NULL,title=NULL, DTrng=NULL){
     theme_bw() +
     geom_boxplot(outlier.shape = NA) +
     coord_cartesian(ylim = c(0,max(m1[,5]))*1.05) +
-    labs(x=NULL,y = paste0("Baseflow discharge (",unit,")"), title=NULL)
+    labs(x=NULL,y = paste0("median separated baseflow (",unit,")"), title=NULL)
   
   if(!is.null(title)) p <- p + ggtitle(title)
   
@@ -72,7 +72,9 @@ output$BF.mnt <- renderPlot({
   isolate(
     if (!is.null(sta$hyd)){
       rng <- input$rng.bf_date_window
-      baseflow_boxplot(sta$hyd,sta$carea,sta$k,'monthly baseflow range',rng)
+      sfx <- ''
+      if(!is.null(rng)) sfx <- paste0(': ',substr(rng[1],1,4),'-',substr(rng[2],1,4))
+      baseflow_boxplot(sta$hyd,sta$carea,sta$k,paste0(sta$label,'\nmonthly baseflow range',sfx),rng)
     }
   )
 })
@@ -82,7 +84,9 @@ output$BFI.mnt <- renderPlot({
   isolate(
     if (!is.null(sta$hyd)){
       rng <- input$rng.bf_date_window
-      baseflow_BFI(sta$hyd,sta$carea,sta$k,'monthly baseflow index (BFI)',rng)
+      sfx <- ''
+      if(!is.null(rng)) sfx <- paste0(': ',substr(rng[1],1,4),'-',substr(rng[2],1,4))
+      baseflow_BFI(sta$hyd,sta$carea,sta$k,paste0(sta$label,'\nmonthly baseflow index (BFI)',sfx),rng)
     }
   )
 })

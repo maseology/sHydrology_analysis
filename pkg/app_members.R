@@ -1,13 +1,23 @@
 
+##############################################################
+### headers
+##############################################################
+
 output$hdr0 <- renderUI({shiny::HTML(paste0("<h2>&emsp;",sta$label,"</h2>"))})
 output$hdr1 <- renderUI({shiny::HTML(paste0("<h2>&emsp;",sta$label,"</h2>"))})
 output$hdr2 <- renderUI({shiny::HTML(paste0("<h2>&emsp;",sta$label,"</h2>"))})
 output$hdr3 <- renderUI({shiny::HTML(paste0("<h2>&emsp;",sta$label,"</h2>"))})
 
+output$hdr.qual <- renderUI({shiny::HTML(paste0("<h3>&emsp;",sta$label,"</h3>"))})
+
+
+##############################################################
+### members
+##############################################################
 
 sta <- reactiveValues(lid=NULL, iid=NULL, name=NULL, name2=NULL, 
-                      carea=NULL, k=NULL, hyd=NULL, DTb=NULL, DTe=NULL, 
-                      label=NULL, info.html=NULL, 
+                      carea=NULL, k=NULL, hyd=NULL, intrp=NULL,
+                      DTb=NULL, DTe=NULL, label=NULL, info.html=NULL, 
                       BFbuilt=FALSE, HPbuilt=FALSE)
 
 sta.fdc <- reactiveValues(cmplt=NULL,prtl=NULL)
@@ -30,7 +40,9 @@ collect_hydrograph <- function(LOC_ID) {
     sta$name2 <- info$NAM2
     sta$label <- paste0(sta$name,': ',sta$name2)
     setProgress(message = 'rendering plot..',value=0.45)
-    sta$hyd <- qTemporal(idbc,sta$iid)
+    hyds <- qTemporal(idbc,sta$iid)
+    sta$hyd <- hyds[[1]]
+    sta$intrp <- hyds[[2]]
     if (nrow(sta$hyd)<=0) showNotification(paste0("Error no data found for ",sta$name2))
     sta$DTb <- min(sta$hyd$Date, na.rm=T)
     sta$DTe <- max(sta$hyd$Date, na.rm=T)

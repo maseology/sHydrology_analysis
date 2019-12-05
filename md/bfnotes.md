@@ -1,9 +1,9 @@
 #### Hydrograph separation methods:
 
- 1.	**BF.LH:** The Lyne-Hollick digital filter (Lyne and Hollick, 1979), 3-pass sweep with *α=0.925* as discussed in Chapman (1999);
- 2.	**BF.CM:** The Chapman-Maxwell digital filter (Chapman and Maxwell, 1996), using automatically computed recession coefficient (*k*);
- 3.	**BF.BE:** The Boughton-Eckhardt digital filter (Boughton, 1993; Eckhardt, 2005) with computed *k* and *BFImax=0.8*;
- 4.	**BF.JH:** The Jakeman-Hornberger digital filter (Jakeman and Hornberger, 1993) based on their IHACRES model with *C=0.3* and *α=-exp(-1/k)*;
+ 1.	**BF.LH:** The Lyne-Hollick digital filter (Lyne and Hollick, 1979), 3-pass sweep with \\(\alpha=0.925\\) as discussed in Chapman (1999);
+ 2.	**BF.CM:** The Chapman-Maxwell digital filter (Chapman and Maxwell, 1996), using automatically computed recession coefficient (\\(k\\));
+ 3.	**BF.BE:** The Boughton-Eckhardt digital filter (Boughton, 1993; Eckhardt, 2005) with computed \\(k\\) and \\(BFI_\text{max}=0.8\\);
+ 4.	**BF.JH:** The Jakeman-Hornberger digital filter (Jakeman and Hornberger, 1993) based on their IHACRES model with \\(C=0.3\\) and \\(\alpha=-\exp(-1/k)\\);
  5.	**BF.Cl:** The method of Clarifica Inc. (2002);
  6.	**BF.UKn:** The UK Institute of Hydrology (or Wallingford) method (Institute of Hydrology, 1980), sweeping minimum of Piggott et.al. (2005);
  7.	**BF.UKx:** The UK Institute of Hydrology/Wallingford method (Institute of Hydrology, 1980), sweeping maximum of Piggott et.al. (2005);

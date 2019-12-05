@@ -8,8 +8,9 @@ fluidPage(
     ),
     mainPanel(
       column(6, plotOutput('BF.mnt')),
-      column(6, plotOutput('BFI.mnt'))
-    ) 
-  ),
-  shiny::includeMarkdown("md/bfmntnotes.md")
+      column(6, plotOutput('BFI.mnt')), br(),
+      shiny::includeMarkdown("md/rightclick.md"), br(),
+      shiny::includeMarkdown("md/bfmntnotes.md") 
+    )
+  )
 )

@@ -52,7 +52,9 @@ output$cum.q <- renderPlot({
     if (!sta$BFbuilt) separateHydrograph()
     if (!is.null(sta$hyd)){
       rng <- input$rng.cd_date_window
-      flow_summary_cumu(sta$hyd,sta$carea,'Cumulative discharge',rng)
+      sfx <- ''
+      if(!is.null(rng)) sfx <- paste0(': ',substr(rng[1],1,4),'-',substr(rng[2],1,4))
+      flow_summary_cumu(sta$hyd,sta$carea,paste0(sta$label,'\ncumulative discharge',sfx),rng)
     }
   })
 })
@@ -63,7 +65,9 @@ output$cum.bf <- renderPlot({
     if (!sta$BFbuilt) separateHydrograph()
     if (!is.null(sta$hyd)){
       rng <- input$rng.cd_date_window
-      flow_summary_cumu_bf(sta$hyd,sta$carea,'Baseflow index',rng)
+      sfx <- ''
+      if(!is.null(rng)) sfx <- paste0(': ',substr(rng[1],1,4),'-',substr(rng[2],1,4))
+      flow_summary_cumu_bf(sta$hyd,sta$carea,paste0(sta$label,'\nbaseflow index',sfx),rng)
     }
   })
 })

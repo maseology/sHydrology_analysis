@@ -35,7 +35,7 @@ flow_summary_annual <- function(hyd,carea,k=NULL,title=NULL,relative=FALSE){
       annotate("text", x=min(hyd$yr), y=mBF, label=paste0("mean baseflow discharge = ",round(mBF,0),unit), hjust=0,vjust=-1,size=4) +
       labs(y = paste0("Discharge (",unit,")"), x=NULL)
   }else{
-    p <- p + labs(y = paste0("Relative discharge (",unit,")"), x=NULL)
+    p <- p + labs(y = paste0("discharge relative to mean (",unit,")"), x=NULL)
   }
   if(!is.null(title)) p <- p + ggtitle(title)
   
@@ -55,6 +55,6 @@ output$yr.q <- renderPlot({isolate({
 output$yr.q.rel <- renderPlot({isolate({
   if (!sta$BFbuilt) separateHydrograph()
   if (!is.null(sta$hyd)){
-    flow_summary_annual(sta$hyd,sta$carea,sta$k,NULL,TRUE)
+    flow_summary_annual(sta$hyd,sta$carea,sta$k,sta$label,TRUE)
   }
 })})

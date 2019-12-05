@@ -18,3 +18,9 @@ output$k.coef <- renderPlot({
     recession_coef_plot(sta$hyd$Flow, sta$k, sta$label)
   })
 })
+
+output$m.coef <- renderPlot({
+  isolate({
+    recession_coef_plot_m(sta$hyd, sta$k, sta$label)
+  })
+})

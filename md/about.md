@@ -4,7 +4,7 @@
 #### Current functionality:
  * Select gauge from a map
 	 * filter locations based on period of record
- * View entire stream flow timeseries
+ * View entire stream flow time series
  * Dynamic hydrograph zooming:
 	 * drag-and-click zoom
 	 * double-click to full extent
@@ -14,6 +14,7 @@
  * Hydrograph dis-aggregation
  * Automatic recession coefficient computation
  * (Peak/Low) flow frequency analysis
+ * In-stream flow regime analysis
  * Trend analysis
  * View data as a table, and export data as *.csv 
 
@@ -29,11 +30,11 @@ The recession coefficient is required for many of the following hydrograph analy
 ### Hydrograph separation methods:
 "Baseflow" is separated from the hydrographs using 14 automatic procedures listed below. Standard baseflow model parameters (as documented in the literature) are also listed where applicable. The user may alter these parameters from the *settings: baseflow separation* window *(yet to be completed)*.
 
- 1.	**BF.LH:** The Lyne-Hollick digital filter (Lyne and Hollick, 1979), 3-pass sweep with *α=0.925* as discussed in Chapman (1999);
- 2.	**BF.CM:** The Chapman-Maxwell digital filter (Chapman and Maxwell, 1996), using automatically computed recession coefficient (*k*);
- 3.	**BF.BE:** The Boughton-Eckhardt digital filter (Boughton, 1993; Eckhardt, 2005) with computed *k* and *BFImax=0.8*;
- 4.	**BF.JH:** The Jakeman-Hornberger digital filter (Jakeman and Hornberger, 1993) based on their IHACRES model with *C=0.3* and *a=-exp(-1/k)*;
- 5.	**BF.Cl:** The 'Clarifica' method of Clarifica Inc. (2002);
+ 1.	**BF.LH:** The Lyne-Hollick digital filter (Lyne and Hollick, 1979), 3-pass sweep with \\(\alpha=0.925\\) as discussed in Chapman (1999);
+ 2.	**BF.CM:** The Chapman-Maxwell digital filter (Chapman and Maxwell, 1996), using automatically computed recession coefficient (\\(k\\));
+ 3.	**BF.BE:** The Boughton-Eckhardt digital filter (Boughton, 1993; Eckhardt, 2005) with computed \\(k\\) and \\(BFI_\text{max}=0.8\\);
+ 4.	**BF.JH:** The Jakeman-Hornberger digital filter (Jakeman and Hornberger, 1993) based on their IHACRES model with \\(C=0.3\\) and \\(\alpha=-\exp(-1/k)\\);
+ 5.	**BF.Cl:** The method of Clarifica Inc. (2002);
  6.	**BF.UKn:** The UK Institute of Hydrology (or Wallingford) method (Institute of Hydrology, 1980), sweeping minimum of Piggott et.al. (2005);
  7.	**BF.UKx:** The UK Institute of Hydrology/Wallingford method (Institute of Hydrology, 1980), sweeping maximum of Piggott et.al. (2005);
  8.	**BF.UKm:** The UK Institute of Hydrology/Wallingford method (Institute of Hydrology, 1980), sweeping median;
@@ -46,12 +47,12 @@ The recession coefficient is required for many of the following hydrograph analy
 
 On the *Long-term trend analysis: monthly baseflow* window, computed baseflow is summarized on a monthly basis in the form of box-whisker plots. The distribution plotted here is built from the median monthly baseflow computed for every month of record using each of the 14 separation methods listed below. Where applicable, the baseflow values have bee normalized by the stream gauge's catchment area thereby providing the values in equivalent mm/month, which can be used as a first-approximation to basin-averaged groundwater recharge.
 
-### Hydrograph summary plots:
+## Hydrograph summary plots:
 #### Annual flow summary
 Provides the long-term (calendar-year) annual volumes and deviations of total flow and separated baseflow.
 
 #### Daily average hydrograph
-After applying a 5-day rolling average to the hydrograph, both total flow and baseflow are averaged on a daily basis, to illustrate the seasonality of the annual hydrograph *(depricated)*.
+After applying a 5-day rolling average to the hydrograph, both total flow and baseflow are averaged on a daily basis, to illustrate the seasonality of the annual hydrograph *(deprecated)*.
 
 #### Monthly baseflow
 Computed baseflow is summarized on a monthly basis in the form of box-whisker plots. The distribution plotted here is built from the median monthly baseflow computed for every month of record using each of the 14 separation methods listed above.
@@ -59,10 +60,11 @@ Computed baseflow is summarized on a monthly basis in the form of box-whisker pl
 #### Cumulative discharge and BFI
 Total and baseflow discharge is accumulated and compared to the long-term trend; this can help identify periods in time where the flow regime has evidently been altered.
 
-A rolling-average Baseflow Index (BFI) plot has been added to futher identify changes to the flow regime.
+A rolling-average Baseflow Index (BFI) plot has been added to further identify changes to the flow regime.
 
 Both plots will automatically be refreshed depending on the time range selected on the hydrograph to the left; this allow quick insight into how the flow regime compares over different time periods.  
 
+## Hydrograph statistical analysis:
 #### Peak flow frequency
 Peak flow frequency curves were modified (with gratitude) from [headwateranalytics.com](http://www.headwateranalytics.com/blog/flood-frequency-analysis-in-r) *(accessed December, 2016)*.
 
@@ -81,10 +83,14 @@ Like before, the user may change the distribution and refresh the plots.
 
 #### Hydrologic flow regime
 
-##### IHA
-*to do*
+**IHA**
 
-##### SAAS
+The Indicators of Hydrologic Alteration (Richter et.al., 1996) has been included and allows the user to dynamically compare IHA statistics between two time periods using the hydrograph view-pane. 
+
+The calculation of IHA statistics is accomplished using the R-IAH package written by Jason Law and is found here: https://rdrr.io/rforge/IHA/ *(accessed February, 2019)*.
+
+**SAAS**
+
 *to do*
 
 #### Recession scatter plot
@@ -100,7 +106,7 @@ Chapman T.G., 1999. A comparison of algorithms for stream flow recession and bas
 
 Clarifica Inc., 2002. Water Budget in Urbanizing Watersheds: Duffins Creek Watershed. Report prepared for the Toronto and Region Conservation Authority.
 
-Eckhardt, K., 2005. How to construct recursive digital filters forbaseflow separation. Hydrological Processes 19, 507-515.
+Eckhardt, K., 2005. How to construct recursive digital filters for baseflow separation. Hydrological Processes 19, 507-515.
 
 Institute of Hydrology, 1980. Low Flow Studies report. Wallingford, UK.
 
@@ -111,6 +117,8 @@ Linsley, R.K., M.A. Kohler, J.L.H. Paulhus, 1975. Hydrology for Engineers 2nd ed
 Lyne, V. and M. Hollick, 1979. Stochastic time-variable rainfall-runoff modelling. Hydrology and Water Resources Symposium, Institution of Engineers Australia, Perth: 89-92.
 
 Piggott, A.R., S. Moin, C. Southam, 2005. A revised approach to the UKIH method for the calculation of baseflow. Hydrological Sciences Journal 50(5): 911-920.
+
+Richter, B.D., J.V. Baumgertner, J. Powell, D.P. Braun, 1996. A Method for Assessing Hydrologic Alteration within Ecosystems. Conservation Biology 10(4): 1163-1174.
 
 Rutledge, A.T., 1998. Computer Programs for Describing the Recession of Ground-Water Discharge and for Estimating Mean Ground-Water Recharge and Discharge from Streamflow Records-Update, Water-Resources Investigation Report 98-4148.
 

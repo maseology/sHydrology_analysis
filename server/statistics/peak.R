@@ -40,7 +40,7 @@ output$pk.q <- renderPlot({
     nrsm <- input$pk.rsmpl
     ci <- input$pk.ci
     if (!is.null(sta$hyd)){
-      withProgress(message = 'rendering plots..', value = 0.1, {peak_flow_frequency(sta$hyd, mdl, nrsm, ci, 'Peak flow frequency')})
+      withProgress(message = 'rendering plots..', value = 0.1, {peak_flow_frequency(sta$hyd, mdl, nrsm, ci, paste0(sta$label,'\npeak flow frequency'))})
     }
   })
 })
@@ -48,7 +48,8 @@ output$pk.q <- renderPlot({
 output$pk.dist <- renderPlot({
   isolate(
     if (!is.null(sta$hyd)){
-      withProgress(message = 'rendering distribution..', value = 0.8, {peak_flow_histogram(sta$hyd, 'Peak flow distribution')})
+      
+      withProgress(message = 'rendering distribution..', value = 0.8, {peak_flow_histogram(sta$hyd, paste0(sta$label,'\ndistribution of annual extremes'))})
     }
   )
 })
