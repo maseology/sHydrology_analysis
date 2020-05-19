@@ -36,7 +36,8 @@ build_hydrograph <- function(sset){
       dyOptions(axisLineWidth = 1.5) %>%
       dyAxis(name='y', label=dylabcms) %>%
       dyLegend(width = 500) %>%
-      dyRangeSelector(height=80)
+      dyRangeSelector(height=80) %>%
+      dyOptions(retainDateWindow = TRUE)
   } else {
     p <- dygraph(qxts)  %>%
       dyHighlight(highlightSeriesOpts = list(strokeWidth = 3)) %>%
@@ -44,7 +45,8 @@ build_hydrograph <- function(sset){
       dyOptions(axisLineWidth = 1.5) %>%
       dyAxis(name='y', label=dylabcms) %>%
       dyLegend(width = 500) %>%
-      dyRangeSelector(height=80)
+      dyRangeSelector(height=80) %>%
+      dyOptions(retainDateWindow = TRUE)
   }
 
   return(p)

@@ -4,11 +4,13 @@
 ########################################################
 
 flow_duration_curve <- function(pg1,pg2=NULL) {
+  breaks <- 10^(-10:10)
+  minor_breaks <- rep(1:9, 21)*(10^rep(-10:10, each=9))
   p <- ggplot() + theme_bw() +
     theme(legend.position=c(0.97,0.97), legend.justification=c(1,1), legend.title=element_blank()) +
     geom_step(data=pg1, aes(x = x, y = (1-y)*100, color="complete data range"), size=2.5) +
-    coord_flip() + scale_x_log10() +
-    labs(x = gglabcms, y = "Exceedance frequency (%)")
+    coord_flip() + scale_x_log10(breaks = breaks, minor_breaks = minor_breaks) +
+    labs(x = gglabcms, y = "Exceedance frequency (%)",title='Flow Duration Curve')
   
   if(!is.null(pg2)){
     p <- p + geom_step(data=pg2, aes(x = x, y = (1-y)*100, color="selected data range"), size=2) +

@@ -5,7 +5,7 @@
 # cms <- "m³/s" # "m<sup>3</sup>/s"
 # km2 <- "km²"
 # m3 <- "m³"
-gglabcms <- expression('Discharge ' ~ (m^3/s))
+gglabcms <- expression('Mean Daily Discharge ' ~ (m^3/s))
 dylabcms <- "Discharge (m<sup>3</sup>/s)"
 
 month <- function (x) as.numeric(format(x, "%m"))

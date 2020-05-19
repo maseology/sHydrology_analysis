@@ -9,12 +9,12 @@ flow_monthly_bar_build <- function(hyd,carea=NULL,DTrng=NULL){
   if(!is.null(carea)) hyd$Flow <- hyd$Flow * 2592/carea # mm/30 days
   
   if(is.null(DTrng)){
-    p <- ggplot(hyd, aes(x = reorder(mnt, montho(hyd$Date)), y = Flow)) +
-      stat_summary(fun.y="mean", geom="bar")
+    p <- ggplot(hyd, aes(x = reorder(mnt, montho(Date)), y = Flow)) +
+      stat_summary(fun="mean", geom="bar")
   }else{
     hyd2 <- subset(hyd, Date>=min(DTrng) & Date<=max(DTrng))
-    p <- ggplot(hyd2, aes(x = reorder(mnt, montho(hyd2$Date)), y = Flow)) +
-      stat_summary(fun.y="mean", geom="bar")    
+    p <- ggplot(hyd2, aes(x = reorder(mnt, montho(Date)), y = Flow)) +
+      stat_summary(fun="mean", geom="bar")    
   }
   
   return(ggplot_build(p)$data[[1]])
@@ -37,7 +37,7 @@ flow_monthly_bar <- function(pg1,pg2=NULL){
   
   return(
     p + scale_x_discrete(limits=c('Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'), expand=c(0.01,0.01)) +
-      labs(y = "Discharge (mm/month)", x=NULL)
+      labs(y = "Discharge (mm/month)", x=NULL, title='Monthly Discharge')
   )
 }
 

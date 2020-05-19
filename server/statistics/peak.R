@@ -22,7 +22,7 @@ peak_flow_histogram <- function(hyd, title=NULL){
   p <- ggplot(df,aes(peak)) +
     theme_bw() +
     geom_density(colour='blue', size=1, fill='blue', alpha=0.2) +
-    labs(x=expression('Annual maximum daily discharge' ~ (m^3/s)), title=NULL)
+    labs(x=expression('Annual maximum daily mean discharge' ~ (m^3/s)), title=NULL)
   
   if(!is.null(title)) p <- p + ggtitle(title)
   

@@ -107,7 +107,7 @@ discretize_hydrograph <- function(hyd,carea,k){
     }
     q.evnt[isv] <- s / carea / 1000.0 # event total [mm]
   }
-  q.evnt[q.evnt==0] <- NA
+  # q.evnt[q.evnt==0] <- NA
   hyd$evnt <- round(q.evnt,1)
   return(hyd)
 }
