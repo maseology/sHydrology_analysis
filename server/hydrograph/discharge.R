@@ -53,7 +53,7 @@ output$hydgrph <- renderDygraph({
           dySeries("Atmospheric yield", axis = 'y2', color="#008080", stepPlot = TRUE, fillGraph = TRUE) %>%
           dyAxis('y', label=dylabcms) %>%
           dyAxis('y2', label='Atmospheric yield (mm)', valueRange = c(100, 0)) %>%
-          dyRangeSelector(strokeColor = '', height=80) %>%
+          dyRangeSelector(fillColor='', height=80) %>%
           dyOptions(retainDateWindow = TRUE)
       } else {
         qxts <- xts(sta$hyd$Flow, order.by = sta$hyd$Date)
@@ -61,7 +61,7 @@ output$hydgrph <- renderDygraph({
         dygraph(qxts) %>%
           dyOptions(axisLineWidth = 1.5, fillGraph = TRUE, stepPlot = TRUE) %>%
           dyAxis(name='y', label=dylabcms) %>%
-          dyRangeSelector(strokeColor = '', height=80) %>%
+          dyRangeSelector(fillColor='', height=80) %>%
           dyOptions(retainDateWindow = TRUE)        
       }
     }else{
@@ -86,7 +86,7 @@ output$hydgrph <- renderDygraph({
         dySeries("Uncorrected", stepPlot = TRUE, fillGraph = TRUE, color = "#6635b5", drawPoints=TRUE, strokeWidth=3) %>%
         dyOptions() %>%
         dyAxis(name='y', label=dylabcms) %>%
-        dyRangeSelector(strokeColor = '', height=80) %>%
+        dyRangeSelector(fillColor='', height=80) %>%
         dyOptions(retainDateWindow = TRUE)
     }
   }

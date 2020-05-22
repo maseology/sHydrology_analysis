@@ -161,7 +161,7 @@ frequencyPlot <- function(series, ci, title=NULL, inverted=FALSE) {
   # now plot
   p <- ggplot(bwpeaks) + 
     geom_point(aes(x=PROB, y=FLOW)) + 
-    theme_bw() + 
+    theme_bw() + theme(panel.grid.major = element_line(colour = "#808080"), panel.grid.minor = element_line(colour = "#808080")) +
     scale_y_continuous(trans="log10", breaks=ybreaks, name=gglabcms) +
     scale_x_continuous(trans=probability_trans(distribution="norm"),
                        breaks=xbreaks, labels=signif(prob2T(xbreaks), digits=3),

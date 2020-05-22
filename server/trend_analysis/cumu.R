@@ -4,20 +4,39 @@
 ########################################################
 flow_summary_cumu <- function(hyd,carea,title=NULL,DTrng=NULL){
   if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
+  
+  # infill NAs
+  df <- data.frame(d=hyd$Date, q=hyd$Flow, b=hyd$BF.med) %>%
+    mutate(Date = as.Date(d)) %>%
+    complete(Date = seq.Date(min(d), max(d), by="day")) %>%
+    replace_na(list(q=mean(hyd$Flow,na.rm=TRUE),b=mean(hyd$BF.med,na.rm=TRUE)))
+  
   if(!is.null(carea)){
-    df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86.4/carea, b=cumsum(hyd$BF.med)*86.4/carea)
+    # df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86.4/carea, b=cumsum(hyd$BF.med)*86.4/carea)
+    df <- data.frame(d=df$Date, c=cumsum(df$q)*86.4/carea, b=cumsum(df$b)*86.4/carea, infil=is.na(df$d))
     unit = expression('Cumulative streamflow ' ~ (mm))
   }else{
-    df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86400, b=cumsum(hyd$BF.med)*86400)
+    # df <- data.frame(d=hyd$Date, c=cumsum(hyd$Flow)*86400, b=cumsum(hyd$BF.med)*86400)
+    df <- data.frame(d=df$Date, c=cumsum(df$q)*86400, b=cumsum(df$b)*86400, infil=is.na(df$d))
     unit = expression('Cumulative streamflow ' ~ (m^3))
   }
   
+  # blank-out infilled data
+  df$c[df$infil] = NA
+  df$b[df$infil] = NA
+  
+  pwc <- piecewise.regression.line(data.frame(x=df$d,y=df$c))
+  pwb <- piecewise.regression.line(data.frame(x=df$d,y=df$b))
+  
   p <- ggplot(df, aes(d)) +
     theme_bw() + theme(legend.position=c(0.03,0.97), legend.justification=c(0,1), legend.title=element_blank()) +
-    geom_line(aes(y=c, color="Total Flow"),size=2) +
-    geom_line(aes(y=b, color="Baseflow"),size=2) +
-    geom_segment(aes(x=min(d),xend=max(d),y=0,yend=max(c)),size=1,linetype="dotted") + 
-    geom_segment(aes(x=min(d),xend=max(d),y=0,yend=max(b)),size=1,linetype="dotted") + 
+    theme(panel.grid.major = element_line(colour = "#808080"), panel.grid.minor = element_line(colour = "#808080")) +
+    geom_line(aes(y=c, color="Total Flow"), size=2) +
+    geom_line(aes(y=b, color="Baseflow"), size=2) +
+    geom_line(aes(x=d,y=v), pwc, color="blue", size=1, alpha=0.7) +
+    geom_line(aes(x=d,y=v), pwb, color="blue", size=1, alpha=0.7) +
+    geom_segment(aes(x=min(d,na.rm=TRUE),xend=max(d,na.rm=TRUE),y=0,yend=max(c,na.rm=TRUE)),size=1,linetype="dotted") + 
+    geom_segment(aes(x=min(d,na.rm=TRUE),xend=max(d,na.rm=TRUE),y=0,yend=max(b,na.rm=TRUE)),size=1,linetype="dotted") + 
     scale_colour_manual(values=c("Total Flow" = "#ef8a62", "Baseflow" = "#43a2ca")) +
     labs(x = NULL, y = unit) +
     scale_x_date()
@@ -29,7 +48,8 @@ flow_summary_cumu <- function(hyd,carea,title=NULL,DTrng=NULL){
 
 flow_summary_cumu_bf <- function(hyd,carea,title=NULL,DTrng=NULL){
   if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
-  df <- data.frame(d=hyd$Date, b=rollmean(hyd$BF.med/hyd$Flow, 365, fill=NA))
+  # df <- data.frame(d=hyd$Date, b=rollmean(hyd$BF.med/hyd$Flow, 365, fill=NA))
+  df <- data.frame(d=hyd$Date, b=rollsum(hyd$BF.med, 365, fill=NA)/rollsum(hyd$Flow, 365, fill=NA))
   
   p <- ggplot(df, aes(d,b)) +
     theme_bw() + #theme(legend.position=c(0.03,0.97), legend.justification=c(0,1), legend.title=element_blank()) +
@@ -54,7 +74,11 @@ output$cum.q <- renderPlot({
       rng <- input$rng.cd_date_window
       sfx <- ''
       if(!is.null(rng)) sfx <- paste0(': ',substr(rng[1],1,4),'-',substr(rng[2],1,4))
-      flow_summary_cumu(sta$hyd,sta$carea,paste0(sta$label,'\ncumulative discharge',sfx),rng)
+      withProgress(
+        message = 'rendering cumulative discharge plot..', value = 0.5, {
+          flow_summary_cumu(sta$hyd,sta$carea,paste0(sta$label,'\ncumulative discharge',sfx),rng)
+        }
+      )
     }
   })
 })
@@ -67,7 +91,11 @@ output$cum.bf <- renderPlot({
       rng <- input$rng.cd_date_window
       sfx <- ''
       if(!is.null(rng)) sfx <- paste0(': ',substr(rng[1],1,4),'-',substr(rng[2],1,4))
-      flow_summary_cumu_bf(sta$hyd,sta$carea,paste0(sta$label,'\nbaseflow index',sfx),rng)
+      withProgress(
+        message = 'rendering baseflow index plot..', value = 0.5, {
+          flow_summary_cumu_bf(sta$hyd,sta$carea,paste0(sta$label,'\nbaseflow index',sfx),rng)
+        }
+      )
     }
   })
 })
@@ -79,6 +107,6 @@ output$rng.cd <- renderDygraph({
     dygraph(qxts) %>%
       dyOptions(axisLineWidth = 1.5, fillGraph = TRUE, stepPlot = TRUE) %>%
       dyAxis(name='y', label=dylabcms) %>%
-      dyRangeSelector(strokeColor = '', height=80)
+      dyRangeSelector(fillColor='', height=80)
   }
 })

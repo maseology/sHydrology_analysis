@@ -13,10 +13,9 @@ hyd.info <- function(title,ndat,DTb,DTe,carea,stat){
   
   paste0(
     "<h4>",title,"</h4>", br(),
-    
+    st.carea, br(),
     '<div>Period of Record: ',strftime(DTb, "%b %Y"),' to ',strftime(DTe, "%b %Y"),' (',por,' days)</div>',
     '<div>total missing: ',por-ndat-1,' days (',round((1-ndat/por)*100,0),'%)</div>', br(),
-    st.carea, br(),
     
     '<div>Average discharge: ',stat[1],' m<sup>3</sup>/s</div>',
     '<div>Median discharge: ',stat[2],' m<sup>3</sup>/s</div>',

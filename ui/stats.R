@@ -11,6 +11,9 @@ navbarMenu("Statistics",
   tabPanel("flow regime: SAAS",
            shiny::includeMarkdown("md/todo.md")
   ),
+  tabPanel("recession duration",
+           source(file.path("ui/statistics", "recess_dur.R"), local = TRUE)$value
+  ),
   tabPanel("recession coefficient",
            source(file.path("ui/statistics", "recession.R"), local = TRUE)$value
   )

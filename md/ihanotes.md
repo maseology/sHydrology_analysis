@@ -1,6 +1,6 @@
 ### Indicators of Hydrologic Alteration (IHA)
 
-Indicators of Hydrologic Alteration is a suite of statistical measures used to characterize the in-stream flow regime. The means and coefficients of variation (CV) of each IHA statistics are separated into 5 groups.
+Indicators of Hydrologic Alteration is a suite of statistical measures used to characterize the in-stream flow regime. The means and coefficients of variation (CV) of each IHA statistics are separated into 5 groups. Test's for significant (p<0.05) change in IHAs are completed via the t-test on means and Lewontin (1996) on CVs.
 
 #### Groups (*after* Richter et.al., 1996):
 
@@ -27,3 +27,5 @@ Indicators of Hydrologic Alteration is a suite of statistical measures used to c
 #### References
 
 Richter, B.D., J.V. Baumgertner, J. Powell, D.P. Braun, 1996. A Method for Assessing Hydrologic Alteration within Ecosystems. Conservation Biology 10(4): 1163-1174.
+
+Lewontin, R.C. 1966. On the measurement of relative variability. Systematic Zoology 15: 141-142.

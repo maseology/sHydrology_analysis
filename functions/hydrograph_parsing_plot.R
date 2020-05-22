@@ -34,7 +34,7 @@ flow_hydrograph_parsed <- function(hyd,InclEV=TRUE){
       dyLegend(show = 'always') %>%  
       dyOptions(axisLineWidth = 1.5, fillAlpha = 0.5, stepPlot = FALSE) %>%
       dyLegend(width = 500) %>%
-      dyRangeSelector(height=80) %>%
+      dyRangeSelector(fillColor='', height=80) %>%
       dyOptions(retainDateWindow = TRUE)
   }else{
     qx <- cbind(x2,x3,x1)
@@ -47,7 +47,7 @@ flow_hydrograph_parsed <- function(hyd,InclEV=TRUE){
       dyLegend(show = 'always') %>%  
       dyOptions(axisLineWidth = 1.5, fillAlpha = 0.5, stepPlot = FALSE) %>%
       dyLegend(width = 500) %>%
-      dyRangeSelector(height=80) %>%
+      dyRangeSelector(fillColor='', height=80) %>%
       dyOptions(retainDateWindow = TRUE)
   }
   

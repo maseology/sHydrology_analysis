@@ -1,4 +1,5 @@
 \bak
+\test
 *.sqlite3
 *.Rproj
 YCDB_API_query.R

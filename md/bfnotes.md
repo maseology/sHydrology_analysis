@@ -25,7 +25,7 @@ Chapman T.G., 1999. A comparison of algorithms for stream flow recession and bas
 
 Clarifica Inc., 2002. Water Budget in Urbanizing Watersheds: Duffins Creek Watershed. Report prepared for the Toronto and Region Conservation Authority.
 
-Eckhardt, K., 2005. How to construct recursive digital filters forbaseflow separation. Hydrological Processes 19, 507-515.
+Eckhardt, K., 2005. How to construct recursive digital filters for baseflow separation. Hydrological Processes 19, 507-515.
 
 Institute of Hydrology, 1980. Low Flow Studies report. Wallingford, UK.
 
