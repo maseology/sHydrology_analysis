@@ -51,7 +51,7 @@ Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf). *(..to
 ### Automatic recession coefficient computation:
 Two forms of streamflow recession coefficients are computed automatically using iterative procedures: 
 
-1. The ($$ b_t=kb_{t-1} $$; Linsley et.al., 1975) recession curve is positioned to envelope the log-transformed discharge data versus subsequent discharge, on the condition that the former exceeds the latter.
+1. The (<img src="https://render.githubusercontent.com/render/math?math=b_t=kb_{t-1}">; Linsley et.al., 1975) recession curve is positioned to envelope the log-transformed discharge data versus subsequent discharge, on the condition that the former exceeds the latter.
 1. The first-order (inverse) hyperbolic stream flow recession coefficient of the form: $$ \frac{1}{Q}-\frac{1}{Q_0}=\frac{t}{m} $$. The inverse of the slope of this function yields a first-cut estimate of the *m* parameter used in TOPMODEL (Beven and Kirkby, 1979).
 
 The recession coefficient *k* is the inverse of the slope of the computed recession curve. 
