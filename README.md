@@ -7,7 +7,7 @@ Can also be modified to hit agency databases, see [Oak Ridges Moraine Groundwate
 
 Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf). *(..to be updated)*
 
-### Current functionality (version 1.4):
+### Current functionality (version 1.4.1):
  * View entire stream flow timeseries
  * Dynamic hydrograph zooming:
 	 * drag-and-click zoom
@@ -145,7 +145,7 @@ Run *app.R* externally such that the app will open on your default web browser. 
 The *'Hydat.sqlite3'* file is roughly 1GB in size and thus cannot be hosted on GitHub.
 
 
-## Current version: 1.4
+## Current version: 1.4.1
 **Task list:**
 
  - [x] Build main Leaflet/Shiny interface
@@ -168,9 +168,13 @@ sHydrology hosted on GitHub is released under the MIT license.
 
 ### Contributors
 
-Mason Marchidon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwater Program](http://oakridgeswater.ca/)
+Mason Marchildon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwater Program](http://oakridgeswater.ca/)
 
 ## Release notes
+
+**version 1.4.1 - May 2020**
+
+* fixed *"Include all computations"* button on DataTable download tab
 
 **version 1.4 - May 2020**
 

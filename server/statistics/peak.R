@@ -35,7 +35,7 @@ peak_flow_histogram <- function(hyd, title=NULL){
   df <- hyd %>% 
     group_by(yr) %>% 
     summarise(
-      Value = max(Flow),
+      Value = max(Flow,na.rm=TRUE),
       Date = Date[which.max(Flow)]) %>% 
     ungroup()
   
