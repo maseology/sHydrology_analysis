@@ -20,6 +20,7 @@ library(ggplot2)
 library(dygraphs)
 library(scales)
 library(segmented)
+library(DT)
 
 
 

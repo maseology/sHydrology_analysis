@@ -1,5 +1,5 @@
 #### data table
-output$tabhyd <- renderDataTable({
+output$tabhyd <- DT::renderDataTable({
     if (!is.null(sta$hyd)){
       df <- sta$hyd[sta$hyd$Date >= input$tabRng[1] & sta$hyd$Date <= input$tabRng[2],]
       if (!is.null(df$qtyp)){

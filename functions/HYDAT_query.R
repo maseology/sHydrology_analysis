@@ -145,6 +145,7 @@ qTemporal <- function(dbc,staID){
   
   Date <- zoo::as.Date(Date)
   # anyDuplicated(Date)
+  Flow <- round(Flow,5)
   Flag <- as.character(Flag)
   Flag[is.na(Flag)] <- ""
   Flag[Flag == "B"] <- "ice_conditions"

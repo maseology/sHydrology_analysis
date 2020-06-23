@@ -35,7 +35,7 @@ output$se.q <- renderPlot({
       geom_step(na.rm = TRUE) + 
       geom_smooth(na.rm=TRUE) +
       facet_grid(rows = vars(se_f)) + #, scales = "free") +
-      ggtitle(paste0(sta$label,'\nmean discharge by season')) + 
+      ggtitle(paste0(sta$label,'\nmean annual discharge by season')) + 
       ylab(ylab) + xlab('water year (oct-sept)')
   }
 })

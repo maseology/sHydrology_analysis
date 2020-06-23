@@ -3,6 +3,7 @@
 # MAM frequency
 ########################################################
 mam_frequency <- function(hyd, dist='lp3', s = 7, n = 2.5E4, ci = 0.90, title=NULL) {
+  hyd <- hyd[!(hyd$Flow<=0),]
   hyd$yr <- as.numeric(format(hyd$Date, "%Y"))
   hyd$mam <- rollapply(hyd$Flow, s, mean, fill = NA)
   input_data <- aggregate(mam ~ yr, hyd, min)[,2]

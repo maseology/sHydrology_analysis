@@ -63,6 +63,7 @@ recession_coef_plot_m <- function(dfin, k=NULL, title=NULL){
   # identifying recessions, adding a sequential counter
   if (is.null(dfin$qtyp)){dfin <- parse_hydrograph(dfin,k)}  # 3: Baseflow_Recession
   df <- dfin
+  df <- df[!(df$Flow<=0),]
   df$f1 <- NA
   df[df$qtyp==3,]$f1 <- 1 
   df$nts <- ave(df$f1, rev(cumsum(rev(is.na(df$f1)))), FUN=cumsum) 
