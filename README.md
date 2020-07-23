@@ -7,7 +7,7 @@ Can also be modified to hit agency databases, see [Oak Ridges Moraine Groundwate
 
 Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf). *(..to be updated)*
 
-### Current functionality (version 1.4.1):
+### Current functionality (version 1.4.2):
  * View entire stream flow timeseries
  * Dynamic hydrograph zooming:
 	 * drag-and-click zoom
@@ -31,22 +31,23 @@ Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf). *(..to
  * markdown
  * jsonlite
  * lubridate
- * ggplot2
- * dygraphs
- * RSQLite
+ * date 
  * zoo
  * xts
+ * broom
  * plyr
  * dplyr
  * tidyr
- * date
- * lmomco
- * cvequality
- * scales
- * broom
  * formattable
- * caTools
+ * lmomco
+ * caTools 
+ * ggplot2
+ * dygraphs
+ * scales 
  * segmented
+ * DT 
+ * RSQLite
+ * cvequality
 
 ### Automatic recession coefficient computation:
 Two forms of streamflow recession coefficients are computed automatically using iterative procedures: 
@@ -134,18 +135,18 @@ Indicators of Hydrologic Alteration is a suite of statistical measures used to c
 
 ## Instructions
 
-As coded, *sHydrology Analysis* is built to view the Water Survey of Canada (WSC) **HY**drological **DAT**abase (HYDAT) which can be downloaded [here](https://www.ec.gc.ca/rhc-wsc/default.asp?lang=En&n=9018B5EC-1).
+As coded, *sHydrology Analysis* is built to view the Water Survey of Canada (WSC) **HY**drological **DAT**abase (HYDAT) which can be downloaded [here](https://collaboration.cmc.ec.gc.ca/cmc/hydrometrics/www/).
 
-Download and extract the SQLite format of the database typically compressed as *'Hydat_sqlite3_YYYYMMDD.zip'*, where *'YYYYMMDD'* is the date of release. Extract the SQLite file *'Hydat.sqlite3'* and place database anywhere on your local machine.
+Download and extract the SQLite format of the database typically compressed as *'Hydat_sqlite3_YYYYMMDD.zip'*, where *'YYYYMMDD'* is the date of release. Extract the SQLite file *'Hydat.sqlite3'* and place in the included */dat* directory.
 
-Using [RStudio](https://https://www.rstudio.com/), install the required packages (see above), and insert the path of the database has to be placed on *Line 15*, and the station name on *Line 14* of the main app file: *app.R*. 
+Using [RStudio](https://https://www.rstudio.com/), install the required packages (see above), and set the station name of interest on *Line 13* of the main app file: *app.R*. 
 
 Run *app.R* externally such that the app will open on your default web browser. (The app must be run externally in order to extract *.csv files.)
 
 The *'Hydat.sqlite3'* file is roughly 1GB in size and thus cannot be hosted on GitHub.
 
 
-## Current version: 1.4.1
+## Current version: 1.4.2
 **Task list:**
 
  - [x] Build main Leaflet/Shiny interface
@@ -171,6 +172,10 @@ sHydrology hosted on GitHub is released under the MIT license.
 Mason Marchildon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwater Program](http://oakridgeswater.ca/)
 
 ## Release notes
+
+**version 1.4.2 - June 2020**
+
+* bug fixes
 
 **version 1.4.1 - May 2020**
 
