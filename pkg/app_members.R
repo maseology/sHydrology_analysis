@@ -34,7 +34,7 @@ collect_hydrograph <- function(LOC_ID) {
     info <- qStaInfo(ldbc,sta$lid)
     if (is.null(info)) showNotification(paste0("Error LOC_ID: ",sta$lid," not found."))
     sta$carea <- info$DA
-    if (sta$carea<=0) sta$carea=NULL
+    if(sta$carea<=0) sta$carea=NULL
     sta$iid <- info$IID
     sta$name <- info$NAM1
     sta$name2 <- info$NAM2
