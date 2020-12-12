@@ -5,12 +5,12 @@
 # Hydrological analysis tools
 #
 # By M. Marchildon
-# v.1.4.2
-# June, 2020
+# v.1.5
+# Dec, 2020
 ##########################################################
 
 source("pkg/packages.R", local = TRUE)
-sta.id <- '02HL003' # '02EC009' # '149335' # '02HC013' #'02HC022' #'02EC002' #'02GA041' #149116 # 149227 #149232 #?sID=149315
+sta.id <- '-1400474601' # '149335' # '02HL003' # '02EC009' # '02HC013' #'02HC022' #'02EC002' #'02GA041' #149116 # 149227 #149232 #?sID=149315
 
 
 shinyApp(
@@ -36,7 +36,7 @@ shinyApp(
         list(tags$head(HTML('<link rel="icon", href="favicon.png",type="image/png" />'))),
         div(style="padding: 1px 0px; height: 0px", titlePanel(title="", windowTitle="sHydrology")), # height: 0px
         navbarPage(
-          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.4.2"),
+          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.5"),
           source(file.path("ui", "hydrograph.R"), local = TRUE)$value,
           source(file.path("ui", "trends.R"), local = TRUE)$value,
           source(file.path("ui", "stats.R"), local = TRUE)$value,
@@ -57,6 +57,7 @@ shinyApp(
     ###################
     ### Load station ID:
     if(!is.null(sta.id)) collect_hydrograph(sta.id) # for testing
+    hide('chk.yld')
     # observe({
     #   query <- parseQueryString(session$clientData$url_search)
     #   if (!is.null(query[['sID']])) {

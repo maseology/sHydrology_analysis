@@ -38,6 +38,7 @@ Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf). *(..to
  * plyr
  * dplyr
  * tidyr
+ * purrr
  * formattable
  * lmomco
  * caTools 
@@ -172,6 +173,11 @@ sHydrology hosted on GitHub is released under the MIT license.
 Mason Marchildon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwater Program](http://oakridgeswater.ca/)
 
 ## Release notes
+
+**version 1.5 - December 2020**
+
+* add station aggregation
+* re-organized function files
 
 **version 1.4.2 - June 2020**
 

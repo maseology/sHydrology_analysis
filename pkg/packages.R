@@ -12,6 +12,7 @@ library(broom)
 library(plyr)
 library(dplyr)
 library(tidyr)
+library(purrr)
 library(formattable)
 library(lmomco)
 library(cvequality)
@@ -24,7 +25,7 @@ library(DT)
 
 
 
-source("functions/HYDAT_query.R", local = TRUE)
+source("functions/YCDB_API_query.R", local = TRUE)
 
 source("pkg/js.R", local = TRUE)
 source("pkg/html.R", local = TRUE)
