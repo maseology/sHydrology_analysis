@@ -176,8 +176,9 @@ Mason Marchildon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwate
 
 **version 1.5 - December 2020**
 
-* add station aggregation
+* added station aggregation
 * re-organized function files
+* added station information to table section
 
 **version 1.4.2 - June 2020**
 

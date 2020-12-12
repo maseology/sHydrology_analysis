@@ -18,7 +18,7 @@ output$hdr.qual <- renderUI({shiny::HTML(paste0("<h3>&emsp;",sta$label,"</h3>"))
 sta <- reactiveValues(lid=NULL, iid=NULL, name=NULL, name2=NULL, 
                       carea=NULL, k=NULL, hyd=NULL, intrp=NULL,
                       DTb=NULL, DTe=NULL, label=NULL, info.html=NULL, 
-                      BFbuilt=FALSE, HPbuilt=FALSE)
+                      info=NULL, BFbuilt=FALSE, HPbuilt=FALSE)
 
 sta.fdc <- reactiveValues(cmplt=NULL,prtl=NULL)
 sta.mnt <- reactiveValues(cmplt=NULL,prtl=NULL)

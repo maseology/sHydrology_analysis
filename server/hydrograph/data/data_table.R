@@ -1,4 +1,17 @@
-#### data table
+
+#### data tables
+output$tabSta <- DT::renderDataTable({
+  if (!is.null(sta$info)){
+    drop <- c("LID","IID")
+    df <- sta$info[,!(names(sta$info) %in% drop)] %>% 
+      rename(StationName=NAM1, LongName=NAM2, latitude=LAT, longitude=LNG, DrainageArea=DA, nData=CNT, PeriodBegin=YRb, PeriodEnd=YRe, Quality=QUAL)
+    DT::datatable(df) %>%
+      formatPercentage('Quality', 0) %>%
+      formatRound(c('latitude', 'longitude'), 3) %>%
+      formatRound('DrainageArea',1)
+  }
+})
+
 output$tabhyd <- DT::renderDataTable({
     if (!is.null(sta$hyd)){
       df <- sta$hyd[sta$hyd$Date >= input$tabRng[1] & sta$hyd$Date <= input$tabRng[2],]

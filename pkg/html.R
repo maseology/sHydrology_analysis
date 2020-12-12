@@ -2,7 +2,7 @@
 ########################################################
 # hydrograph info
 ########################################################
-hyd.info <- function(title,ndat,DTb,DTe,carea,stat){
+html.hyd.info <- function(title,ndat,DTb,DTe,carea,stat){
   por <- as.integer(difftime(DTe, DTb, units = "days"))+1
   stat <- round(stat,2)
   if(is.null(carea)){

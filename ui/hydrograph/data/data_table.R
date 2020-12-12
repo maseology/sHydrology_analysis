@@ -6,6 +6,7 @@ fluidRow(
     width=2
   ),
   mainPanel(
+    DT::dataTableOutput('tabSta'), br(),
     DT::dataTableOutput('tabhyd'),
     width=10
   )
