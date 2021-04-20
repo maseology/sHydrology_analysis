@@ -1,0 +1,1 @@
+The above plot is a simple means of determining how long high flows would return to base levels. This could be informative in cases when discharge high, and a water resource manager wishes to know the period with which there is a higher flood risk due to wet anticedent conditions.

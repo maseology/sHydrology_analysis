@@ -1,6 +1,7 @@
 fluidRow(
   sidebarPanel(
-    htmlOutput('info.main'), 
+    htmlOutput('info.main'),
+    dateRangeInput("dt.rng",label='select date range:'),
     checkboxInput('chk.flg','show observation flags'),
     checkboxInput('chk.yld','show catchment simulation (where applied)'),
     width = 2

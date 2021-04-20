@@ -174,6 +174,12 @@ Mason Marchildon P.Eng M.ASc, Hydrologist for the [Oak Ridges Moraine Groundwate
 
 ## Release notes
 
+**version 1.6 - April 2021**
+
+* added date selector to hydrograph page
+* added discharge duration to median plot
+* updated cumulative plots (included break point)
+
 **version 1.5 - December 2020**
 
 * added station aggregation

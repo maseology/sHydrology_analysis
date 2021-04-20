@@ -9,7 +9,16 @@ observe({
       sta.mnt$prtl <- flow_monthly_bar_build(sta$hyd,sta$carea,rng)
     }
   })
-  
+})
+
+observe(updateDateRangeInput(session, "dt.rng", start = sta$DTb, end = sta$DTe, min = sta$DTb, max = sta$DTe))
+
+observeEvent(input$hydgrph_date_window, {
+  updated_date_window(input$hydgrph_date_window,"dt.rng")
+})
+
+observeEvent(input$dt.rng, {
+  updated_date_selector(input$dt.rng)
 })
 
 output$info.main <- renderUI({
