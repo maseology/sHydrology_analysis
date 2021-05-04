@@ -7,7 +7,10 @@ fluidRow(
     width = 2
   ),
   mainPanel(
-    dygraphOutput("hydgrph"), br(),
+    tabsetPanel(type = "tabs",
+                tabPanel("Dynamic", dygraphOutput("dyhydgrph")),
+                tabPanel("Printable", plotOutput("gghydgrph"))
+    ), br(),
     column(6, plotOutput('fdc')),
     column(6, plotOutput('mnt.q')),
     width = 10

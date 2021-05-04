@@ -1,7 +1,7 @@
 
 
 # from https://stackoverflow.com/questions/49215000/synchronise-dygraph-and-daterangeinput-in-shiny
-ntrig <- 100 # Note that I added a reset of the counters when above 10. This is too avoid the trigger value to be to high for R. When the counter resets, you may notice a small outburst, depending on the speed your users change the slider. You can increase this value to make it appear less often.
+ntrig <- 10 # Note that I added a reset of the counters when above 10. This is too avoid the trigger value to be to high for R. When the counter resets, you may notice a small outburst, depending on the speed your users change the slider. You can increase this value to make it appear less often.
 
 r <- reactiveValues(
   change_datewindow = 0,
