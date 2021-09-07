@@ -13,3 +13,4 @@ source(file.path("server/statistics", "recess_dur.R"), local = TRUE)$value
 source(file.path("server/statistics", "recession.R"), local = TRUE)$value
 source(file.path("server/hydrograph/data", "data_table.R"), local = TRUE)$value
 source(file.path("server/hydrograph/data", "data_qual.R"), local = TRUE)$value
+source(file.path("server/hydrograph/data", "data_summary.R"), local = TRUE)$value

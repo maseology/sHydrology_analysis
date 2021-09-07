@@ -108,12 +108,13 @@ qStaLoc <- function(dbc, staID){
 ## collect location info
 ###########################################################################################
 qStaInfo <- function(dbc,staID){
-  return(qStaLoc(dbc,staID))
+  return(data.frame(qStaLoc(dbc,staID)))
 }
 qStaCarea <- function(dbc,staID){
   qSta <- dbGetQuery(dbc, paste0('select * from STATIONS where STATION_NUMBER = "',staID,'"'))
   return(qSta$DRAINAGE_AREA_GROSS)
 }
+qStaAgg <- function(LOC_ID) { LOC_ID }
 
 
 ###########################################################################################

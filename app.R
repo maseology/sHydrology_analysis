@@ -5,12 +5,12 @@
 # Hydrological analysis tools
 #
 # By M. Marchildon
-# v.1.6
-# Apr, 2021
+# v.1.6.1
+# Sep, 2021
 ##########################################################
 
 source("pkg/packages.R", local = TRUE)
-sta.id <- '-1400474601' # '149335' # '02HL003' # '02EC009' # '02HC013' #'02HC022' #'02EC002' #'02GA041' #149116 # 149227 #149232 #?sID=149315
+sta.id <- '02EC009' #'149335' #'-1400474601' #  '02HL003' # ' '02HC013' #'02HC022' #'02EC002' #'02GA041' #149116 # 149227 #149232 #?sID=149315
 
 
 shinyApp(
@@ -55,9 +55,10 @@ shinyApp(
     
     
     ###################
-    ### Load station ID:
+    ### (hard) Load station ID:
     if(!is.null(sta.id)) collect_hydrograph(sta.id) # for testing
     hide('chk.yld')
+    ### Load from URL:
     # observe({
     #   query <- parseQueryString(session$clientData$url_search)
     #   if (!is.null(query[['sID']])) {
@@ -69,7 +70,7 @@ shinyApp(
 
     
     ### load external code:
-    source("pkg/server_sources.R", local = TRUE)$value
+    source("server/server_sources.R", local = TRUE)$value
     
     session$onSessionEnded(stopApp)
   }

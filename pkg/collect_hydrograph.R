@@ -6,7 +6,7 @@ collect_hydrograph <- function(LOC_ID) {
   isolate(withProgress(message = 'collecting station info..', value = 0.1, {
     sta$lid <- LOC_ID
     info <- qStaInfo(ldbc, qStaAgg(sta$lid))
-    # print(info)
+    
     if (is.null(info)) showNotification(paste0("Error LOC_ID: ",sta$lid," not found."))
     info.main <- info[info$LID==LOC_ID,] #################  mm: currently LOC_ID picked, should we default to master loc??????
     # info <- info.main # for testing

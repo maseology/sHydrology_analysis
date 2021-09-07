@@ -21,7 +21,11 @@ output$tabhyd <- DT::renderDataTable({
         df$qtyp[df$qtyp=="2"] <- "Falling Limb"
         df$qtyp[df$qtyp=="3"] <- "Flow Recession"
       }
-      df
+      if (ncol(df) > 4) {
+        df %>% select(-c('BF.min','BF.max'))
+      } else {
+        df
+      }
     }
   }, 
   options = list(scrollY='100%', scrollX=TRUE,
