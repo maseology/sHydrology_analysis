@@ -5,12 +5,13 @@
 # Hydrological analysis tools
 #
 # By M. Marchildon
-# v.1.6.1
-# Sep, 2021
+# v.1.6.2
+# Nov, 2021
 ##########################################################
 
 source("pkg/packages.R", local = TRUE)
-sta.id <- '02EC009' #'149335' #'-1400474601' #  '02HL003' # ' '02HC013' #'02HC022' #'02EC002' #'02GA041' #149116 # 149227 #149232 #?sID=149315
+source("pkg/sources.R", local = TRUE)
+sta.id <- '02EC009'
 
 
 shinyApp(

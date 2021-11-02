@@ -25,8 +25,6 @@ library(DT)
 
 
 
-source("functions/HYDAT_query.R", local = TRUE)
-
 source("pkg/js.R", local = TRUE)
 source("pkg/html.R", local = TRUE)
 
