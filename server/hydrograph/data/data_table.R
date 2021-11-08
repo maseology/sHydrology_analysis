@@ -2,9 +2,9 @@
 #### data tables
 output$tabSta <- DT::renderDataTable({
   if (!is.null(sta$info)){
-    drop <- c("LID","IID")
+    drop <- c("LOC_ID","INT_ID")
     df <- sta$info[,!(names(sta$info) %in% drop)] %>% 
-      rename(StationName=NAM1, LongName=NAM2, latitude=LAT, longitude=LNG, DrainageArea=DA, nData=CNT, PeriodBegin=YRb, PeriodEnd=YRe, Quality=QUAL)
+      rename(StationName=LOC_NAME, LongName=LOC_NAME_ALT1, latitude=LAT, longitude=LONG, DrainageArea=SW_DRAINAGE_AREA_KM2, nData=CNT, PeriodBegin=YRb, PeriodEnd=YRe, Quality=QUAL)
     DT::datatable(df) %>%
       formatPercentage('Quality', 0) %>%
       formatRound(c('latitude', 'longitude'), 3) %>%
@@ -21,7 +21,7 @@ output$tabhyd <- DT::renderDataTable({
         df$qtyp[df$qtyp=="2"] <- "Falling Limb"
         df$qtyp[df$qtyp=="3"] <- "Flow Recession"
       }
-      if (ncol(df) > 4) {
+      if (ncol(df) > 3 + 6) {
         df %>% select(-c('BF.min','BF.max'))
       } else {
         df

@@ -4,7 +4,8 @@
 ########################################################
 peak_flow_frequency <- function(hyd, dist='lp3', n = 2.5E4, ci = 0.90, title=NULL) {
   hyd$yr <- as.numeric(format(hyd$Date, "%Y"))
-  input_data <- aggregate(Flow ~ yr, hyd, max)[,2]
+  agg <- aggregate(Flow ~ yr, hyd, max)
+  input_data <- agg[,2]
   
   ci <- BootstrapCI(series=input_data, # flow data
                     distribution=dist, # distribution
@@ -12,7 +13,7 @@ peak_flow_frequency <- function(hyd, dist='lp3', n = 2.5E4, ci = 0.90, title=NUL
                     ci = ci)           # confidence interval level
   
   # generate frequency plot
-  return(frequencyPlot(series=input_data, ci$ci, title))
+  return(frequencyPlot(input_data, agg[,1], ci$ci, title))
 }
 
 peak_flow_density <- function(hyd, title=NULL){

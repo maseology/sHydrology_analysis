@@ -5,17 +5,17 @@
 collect_hydrograph <- function(LOC_ID) {
   isolate(withProgress(message = 'collecting station info..', value = 0.1, {
     sta$lid <- LOC_ID
-    info <- qStaInfo(ldbc, qStaAgg(sta$lid))
+    info <- qStaInfo(ldbc, sta$lid)
     
     if (is.null(info)) showNotification(paste0("Error LOC_ID: ",sta$lid," not found."))
-    info.main <- info[info$LID==LOC_ID,] #################  mm: currently LOC_ID picked, should we default to master loc??????
+    info.main <- info[info$LOC_ID==LOC_ID,] #################  mm: currently LOC_ID picked, should we default to master loc??????
     # info <- info.main # for testing
     sta$info <- info
-    sta$carea <- info.main$DA
+    sta$carea <- info.main$SW_DRAINAGE_AREA_KM2
     if (length(sta$carea)==0 || sta$carea<=0) sta$carea=NULL
-    sta$iid <- info.main$IID
-    sta$name <- info.main$NAM1
-    sta$name2 <- info.main$NAM2
+    sta$iid <- info.main$INT_ID
+    sta$name <- info.main$LOC_NAME
+    sta$name2 <- info.main$LOC_NAME_ALT1
     sta$label <- paste0(sta$name,': ',sta$name2)
     if (nrow(info)>1) {
       showNotification("aggregating co-located stations")
@@ -23,7 +23,7 @@ collect_hydrograph <- function(LOC_ID) {
       sta$label <- paste0(sta$label,' (AGGREGATED)')
     }
     setProgress(message = 'querying databases..',value=0.45)
-    hyds <- qTemporal(idbc,info$IID)
+    hyds <- qTemporal(idbc,info$INT_ID)
     setProgress(message = 'rendering plot..',value=0.65)
     sta$hyd <- hyds[[1]]
     sta$intrp <- hyds[[2]]
@@ -36,7 +36,11 @@ collect_hydrograph <- function(LOC_ID) {
     # updateNumericInput(session,'k.val',value=sta$k)
     setProgress(message = 'computing flow duration and monthly statistics..',value=0.65)
     sta.fdc$cmplt <- flow_duration_curve_build(sta$hyd)
-    sta.mnt$cmplt <- flow_monthly_bar_build(sta$hyd,sta$carea)    
+    sta.mnt$cmplt <- flow_monthly_bar_build(sta$hyd,sta$carea)
+    setProgress(message = 'gathering climate interpolated to catchment..',value=0.85)
+    df <- owrc.api(info[['LAT']][1],info[['LONG']][1])
+    sta$hyd <- sta$hyd %>% inner_join(df, by="Date")
+    # sta$hyd <- sta$hyd %>% inner_join(df %>% dplyr::select(-c("Tx","Tn","Sf","Pa")), by="Date")
   }))
   shinyjs::hide(id = "loading-content", anim = TRUE, animType = "fade")
   shinyjs::show("app-content")

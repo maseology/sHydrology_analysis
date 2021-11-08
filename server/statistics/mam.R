@@ -6,7 +6,8 @@ mam_frequency <- function(hyd, dist='lp3', s = 7, n = 2.5E4, ci = 0.90, title=NU
   hyd <- hyd[!(hyd$Flow<=0),]
   hyd$yr <- as.numeric(format(hyd$Date, "%Y"))
   hyd$mam <- rollapply(hyd$Flow, s, mean, fill = NA)
-  input_data <- aggregate(mam ~ yr, hyd, min)[,2]
+  agg <- aggregate(Flow ~ yr, hyd, max)
+  input_data <- agg[,2]
   
   ci <- BootstrapCI(series=input_data, # flow data
                     distribution=dist, # distribution
@@ -14,7 +15,7 @@ mam_frequency <- function(hyd, dist='lp3', s = 7, n = 2.5E4, ci = 0.90, title=NU
                     ci = ci)           # confidence interval level
   
   # generate frequency plot
-  return(frequencyPlot(series=input_data, ci$ci, title, inverted=TRUE))
+  return(frequencyPlot(input_data, agg[,1], ci$ci, title, inverted=TRUE))
 }
 
 mam_histogram <- function(hyd, s) {

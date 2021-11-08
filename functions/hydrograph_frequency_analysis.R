@@ -136,16 +136,21 @@ BootstrapCI <- function(series, distribution, n.resamples=1E3, nep=nonexceeds(),
 
 #########################################################################
 
-frequencyPlot <- function(series, ci, title=NULL, inverted=FALSE) {
+frequencyPlot <- function(series, years, ci, title=NULL, inverted=FALSE) {
 
   # determine plotting positions
   if(inverted) {
     bwpeaks <- data.frame(PROB = 1-pp(series, sort = FALSE), FLOW = series)
     nep <- 1-ci$nonexceed_prob
+    lorg <- c(0, 0)
+    lpos <- c(.01, .01)
   } else {
     bwpeaks <- data.frame(PROB = pp(series, sort = FALSE), FLOW = series)
     nep <- ci$nonexceed_prob
+    lorg <- c(1, 0)
+    lpos <- c(.99, .01)
   }
+  bwpeaks$year = years
   
   xbreaks <- c(0.002,0.01,0.1,0.25,0.5,0.8,0.9,0.95,0.975,0.99,0.995, 0.998)
   log.range <- log10(range(series, ci[,ncol(ci)], na.rm = TRUE)) #ci[,1]
@@ -160,8 +165,11 @@ frequencyPlot <- function(series, ci, title=NULL, inverted=FALSE) {
   
   # now plot
   p <- ggplot(bwpeaks) + 
-    geom_point(aes(x=PROB, y=FLOW)) + 
-    theme_bw() + theme(panel.grid.major = element_line(colour = "#808080"), panel.grid.minor = element_line(colour = "#808080")) +
+    geom_point(aes(x=PROB, y=FLOW, colour=year)) + 
+    scale_color_continuous(type = "viridis") +
+    theme_bw() + theme(panel.grid.major = element_line(colour = "#808080"), 
+                       panel.grid.minor = element_line(colour = "#808080"),
+                       legend.justification = lorg, legend.position = lpos) +
     scale_y_continuous(trans="log10", breaks=ybreaks, name=gglabcms) +
     scale_x_continuous(trans=probability_trans(distribution="norm"),
                        breaks=xbreaks, labels=signif(prob2T(xbreaks), digits=3),
