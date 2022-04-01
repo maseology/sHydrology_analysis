@@ -10,7 +10,10 @@ observe({
   })
 })
 
-observe(updateDateRangeInput(session, "dt.rng", start = sta$DTb, end = sta$DTe, min = sta$DTb, max = sta$DTe))
+observe({
+  if (!is.null(sta$hyd)) 
+    updateDateRangeInput(session, "dt.rng", start = sta$DTb, end = sta$DTe, min = sta$DTb, max = sta$DTe)
+})
 
 observeEvent(input$dyhydgrph_date_window, {
   updated_date_window(input$dyhydgrph_date_window,"dt.rng")
@@ -49,13 +52,13 @@ output$info.main <- renderUI({
 ### plots
 ######################
 dRange <- reactive({
-  rng <- input$dt.rng
+  req(rng <- input$dt.rng)
   sta$hyd[sta$hyd$Date >= as.character(rng[1]) & sta$hyd$Date <= as.character(rng[2]),]
 })
 
+
 output$gghydgrph <- renderPlot({
   wflg <- input$chk.flg
-  wyld <- input$chk.yld
   if (!is.null(sta$hyd)){
     df <- dRange()
     if(!wflg){
@@ -80,21 +83,22 @@ output$gghydgrph <- renderPlot({
 
 output$dyhydgrph <- renderDygraph({
   wflg <- input$chk.flg
-  wyld <- input$chk.yld
-  if (!is.null(sta$hyd)){
-    rng <- r$rngselect+1
+  req(rng <- r$rngselect+1)
+  print(rng)
+  if (!is.null(sta$hyd) && rng[[1]]!=rng[[2]]){
     if(!wflg){
-      if (wyld && !is.null(sta$intrp)){
+      if ("Tx" %in% colnames(sta$hyd)){
+        print(colnames(sta$hyd))
         qFlw <- xts(sta$hyd$Flow, order.by = sta$hyd$Date)
-        qPre <- xts(sta$intrp$yld, order.by = sta$intrp$Date)
-        qSim <- xts(sta$intrp$sim, order.by = sta$intrp$Date)
-        qx <- cbind(qFlw,qSim,qPre)
-        colnames(qx) <- c('Observed','Simulated','Atmospheric yield')
+        qRf <- xts(sta$hyd$Rf, order.by = sta$hyd$Date)
+        qSm <- xts(sta$hyd$Sm, order.by = sta$hyd$Date)
+        
+        qx <- cbind(qFlw,qRf,qSm)
+        colnames(qx) <- c('Observed','Rainfall','Snowmelt')
         dygraph(qx) %>%
           dySeries("Observed", color = "blue") %>%
-          dySeries("Simulated", color = "red", strokePattern='dotted') %>%
-          # dyBarSeries("Atmospheric yield", axis = 'y2') %>%  ### BUG: these don't seem to appear as of 191126
-          dySeries("Atmospheric yield", axis = 'y2', color="#008080", stepPlot = TRUE, fillGraph = TRUE) %>%
+          dyBarSeries("Rainfall", axis = 'y2', color="#1f78b4") %>%
+          dyBarSeries("Snowmelt", axis = 'y2', color="#a6cee3") %>%
           dyAxis('y', label=dylabcms) %>%
           dyAxis('y2', label='Atmospheric yield (mm)', valueRange = c(100, 0)) %>%
           dyRangeSelector(fillColor='', height=80, dateWindow = rng) %>%

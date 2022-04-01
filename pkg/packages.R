@@ -22,6 +22,10 @@ library(dygraphs)
 library(scales)
 library(segmented)
 library(DT)
+library(bitops)
+library(caTools)
+library(cvequality)
+library(segmented)
 
 
 

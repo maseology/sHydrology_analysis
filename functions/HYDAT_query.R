@@ -99,7 +99,7 @@ qStaLoc <- function(dbc, staID){
   info$LAT <- l$LATITUDE
   info$LNG <- l$LONGITUDE
   info$DA <- l$DRAINAGE_AREA_GROSS
-  
+
   return(info)
 } 
 

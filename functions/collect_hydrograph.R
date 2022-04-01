@@ -23,10 +23,8 @@ collect_hydrograph <- function(LOC_ID) {
       sta$label <- paste0(sta$label,' (AGGREGATED)')
     }
     setProgress(message = 'querying databases..',value=0.45)
-    hyds <- qTemporal(idbc,info$INT_ID)
+    sta$hyd <- qTemporal(idbc,info$INT_ID)
     setProgress(message = 'rendering plot..',value=0.65)
-    sta$hyd <- hyds[[1]]
-    sta$intrp <- hyds[[2]]
     if (nrow(sta$hyd)<=0) showNotification(paste0("Error no data found for ",sta$name2))
     sta$DTb <- min(sta$hyd$Date, na.rm=T)
     sta$DTe <- max(sta$hyd$Date, na.rm=T)

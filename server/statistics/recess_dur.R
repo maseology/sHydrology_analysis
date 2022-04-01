@@ -50,7 +50,7 @@ output$rsdr.time <- renderPlot({
         scale_x_reverse(limits = c(fun.inv(max(sta$hyd$Flow)),fun.inv(min(sta$hyd$Flow))), breaks = pretty_breaks(10)) +
         scale_y_continuous(trans='log10', minor_breaks = minor_breaks, 
                            sec.axis = sec_axis(~.*1, breaks = brks, name = 'discharge percent exceedance')) +
-        labs(x="days to median discharge",y="discharge", title=sta$label)
+        labs(x="days to median discharge",y=gglabcms, title=sta$label)
     }
   })
 })
