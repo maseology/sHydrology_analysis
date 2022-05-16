@@ -37,7 +37,7 @@ collect_hydrograph <- function(LOC_ID) {
     sta.mnt$cmplt <- flow_monthly_bar_build(sta$hyd,sta$carea)
     setProgress(message = 'gathering climate interpolated to catchment..',value=0.85)
     df <- owrc.api(info[['LAT']][1],info[['LONG']][1])
-    sta$hyd <- sta$hyd %>% inner_join(df, by="Date")
+    if ( !is.null(df) ) sta$hyd <- sta$hyd %>% inner_join(df, by="Date")
     # sta$hyd <- sta$hyd %>% inner_join(df %>% dplyr::select(-c("Tx","Tn","Sf","Pa")), by="Date")
   }))
   shinyjs::hide(id = "loading-content", anim = TRUE, animType = "fade")

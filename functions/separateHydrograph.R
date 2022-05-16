@@ -1,5 +1,4 @@
 
-
 separateHydrograph <- function(){
   # progress bar
   progress <- shiny::Progress$new()
@@ -12,9 +11,9 @@ separateHydrograph <- function(){
     }
     progress$set(value = value, detail = detail)
   }
-  
   if (!is.null(sta$hyd) & !sta$BFbuilt){
-    sta$hyd <- baseflow_range(sta$hyd,sta$carea,sta$k,BFp,updateProgress)
+    qBF <- baseflow_range(sta$hyd,sta$carea,sta$k,BFp,updateProgress) %>% subset(select=-c(Flow,Flag))
+    sta$hyd <- merge(sta$hyd, qBF, 'Date')
     sta$BFbuilt <- TRUE
     progress$set(value = 1)
   }

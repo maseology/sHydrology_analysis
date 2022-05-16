@@ -58,23 +58,3 @@ select_hydrographs <- function(){
   if (input$BF.LH) s <- append(s, 'BF.LH')
   return(s)
 }
-
-separateHydrograph <- function(){
-  # progress bar
-  progress <- shiny::Progress$new()
-  progress$set(message = "separating hydrograph..", detail = 'initializing..', value = 0.1)
-  on.exit(progress$close())
-  updateProgress <- function(value = NULL, detail = NULL) {
-    if (is.null(value)) {
-      value <- progress$getValue()
-      value <- value + (progress$getMax() - value) / 5
-    }
-    progress$set(value = value, detail = detail)
-  }
-  
-  if (!is.null(sta$hyd) & !sta$BFbuilt){
-    sta$hyd <- baseflow_range(sta$hyd,sta$carea,sta$k,BFp,updateProgress)
-    sta$BFbuilt <- TRUE
-    progress$set(value = 1)
-  }
-}

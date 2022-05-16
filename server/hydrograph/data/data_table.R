@@ -21,15 +21,16 @@ output$tabhyd <- DT::renderDataTable({
         df$qtyp[df$qtyp=="2"] <- "Falling Limb"
         df$qtyp[df$qtyp=="3"] <- "Flow Recession"
       }
-      if (ncol(df) > 3 + 6) {
-        df %>% select(-c('BF.min','BF.max'))
-      } else {
-        df
-      }
+      # if (ncol(df) > 3 + 6) {
+      #   df %>% select(-c('BF.min','BF.max'))
+      # } else {
+      #   df
+      # }
+      return(df)
     }
   }, 
   options = list(scrollY='100%', scrollX=TRUE,
-            lengthMenu = c(30, 100, 365, 3652),
+            lengthMenu = c(5, 30, 100, 365, 3652),
             pageLength = 100,
             searching=FALSE)
 )
