@@ -77,7 +77,7 @@ qStaLoc <- function(dbc, staID){
   l <- dbGetQuery(dbc, paste0('select * from STATIONS where STATION_NUMBER = "',staID,'"'))
   
   info <- vector("list", 11)
-  names(info) <- c("LID","IID","NAM1","NAM2","LAT","LNG","DA","CNT","YRb","YRe","QUAL")
+  names(info) <- c("LOC_ID","INT_ID","LOC_NAME","LOC_NAME_ALT1","LAT","LNG","SW_DRAINAGE_AREA_KM2","CNT","YRb","YRe","QUAL") #c("LID","IID","NAM1","NAM2","LAT","LNG","DA","CNT","YRb","YRe","QUAL")
  
   q <- dbGetQuery(dbc, paste0('select * from DLY_FLOWS where STATION_NUMBER = "',staID,'"'))
   if (nrow(q)==0) {
@@ -92,13 +92,13 @@ qStaLoc <- function(dbc, staID){
     info$CNT <- 365.24*nrow(q)
     info$QUAL <- (max(q$YEAR)-min(q$YEAR)+1)/nrow(q)
   }
-  info$LID <- staID
-  info$IID <- staID
-  info$NAM1 <- staID
-  info$NAM2 <- l$STATION_NAME
+  info$LOC_ID <- staID
+  info$INT_ID <- staID
+  info$LOC_NAME <- staID
+  info$LOC_NAME_ALT1 <- l$STATION_NAME
   info$LAT <- l$LATITUDE
   info$LNG <- l$LONGITUDE
-  info$DA <- l$DRAINAGE_AREA_GROSS
+  info$SW_DRAINAGE_AREA_KM2 <- l$DRAINAGE_AREA_GROSS
 
   return(info)
 } 
@@ -123,6 +123,7 @@ qStaAgg <- function(LOC_ID) { LOC_ID }
 qTemporal <- function(dbc,staID){
   qFlow <- dbGetQuery(dbc, paste0('select * from DLY_FLOWS where STATION_NUMBER = "',staID,'"'))
   # qFlow <- dbGetQuery(dbc, 'select * from DLY_FLOWS where STATION_NUMBER = "02HB002"')
+  # print(qFlow)
   DTb <- zoo::as.Date(paste0(as.numeric(qFlow[1,2]),'-',as.numeric(qFlow[1,3]),'-01'))
   DTe <- zoo::as.Date(paste0(as.numeric(tail(qFlow[2],1)),'-',as.numeric(tail(qFlow[3],1)),'-01'))
   POR <- as.numeric(DTe-DTb)
@@ -147,6 +148,7 @@ qTemporal <- function(dbc,staID){
   # anyDuplicated(Date)
   Flow <- round(Flow,5)
   Flag <- as.character(Flag)
+  
   Flag[is.na(Flag)] <- ""
   Flag[Flag == "B"] <- "ice_conditions"
   Flag[Flag == "E"] <- "estimate"
@@ -158,7 +160,8 @@ qTemporal <- function(dbc,staID){
   hyd <- data.frame(Date,Flow,Flag)
   hyd <- hyd[!is.na(hyd$Date),]
   hyd <- hyd[!is.na(hyd$Flow),]
-  return(list(hyd, NULL))
+  
+  return(hyd)
 }
 
 
@@ -202,6 +205,12 @@ qTemporal.many <- function(dbc,stalst){
 }
 
 
+
+
+###########################################################################################
+## Dummies
+###########################################################################################
+get.supplimental <- function(info=NULL) NULL
 
 
 

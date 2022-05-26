@@ -12,7 +12,7 @@
 
 source("pkg/packages.R", local = TRUE)
 source("pkg/sources.R", local = TRUE)
-sta.id <- '149343' #'02EC009'
+sta.id <- '02EC009' #'149343' #
 
 
 shinyApp(
@@ -57,18 +57,18 @@ shinyApp(
     
     
     ###################
-    # ### (hard-coded) Load station ID:
-    # if(!is.null(sta.id)) collect_hydrograph(sta.id) # for testing
-    # hide('chk.yld')
+    ### (hard-coded) Load station ID:
+    if(!is.null(sta.id)) collect_hydrograph(sta.id) # for testing
+    hide('chk.yld')
     ### Load from URL:
-    observe({
-      query <- parseQueryString(session$clientData$url_search)
-      if (!is.null(query[['sID']])) {
-        collect_hydrograph(query[['sID']])
-      } else {
-        showNotification(paste0("Error: URL invalid."))
-      }
-    })
+    # observe({
+    #   query <- parseQueryString(session$clientData$url_search)
+    #   if (!is.null(query[['sID']])) {
+    #     collect_hydrograph(query[['sID']])
+    #   } else {
+    #     showNotification(paste0("Error: URL invalid."))
+    #   }
+    # })
 
     
     ### load external code:

@@ -25,6 +25,7 @@ collect_hydrograph <- function(LOC_ID) {
     setProgress(message = 'querying databases..',value=0.45)
     sta$hyd <- qTemporal(idbc,info$INT_ID)
     setProgress(message = 'rendering plot..',value=0.65)
+    
     if (nrow(sta$hyd)<=0) showNotification(paste0("Error no data found for ",sta$name2))
     sta$DTb <- min(sta$hyd$Date, na.rm=T)
     sta$DTe <- max(sta$hyd$Date, na.rm=T)
@@ -36,7 +37,7 @@ collect_hydrograph <- function(LOC_ID) {
     sta.fdc$cmplt <- flow_duration_curve_build(sta$hyd)
     sta.mnt$cmplt <- flow_monthly_bar_build(sta$hyd,sta$carea)
     setProgress(message = 'gathering climate interpolated to catchment..',value=0.85)
-    df <- owrc.api(info[['LAT']][1],info[['LONG']][1])
+    df <- get.supplimental(info)
     if ( !is.null(df) ) sta$hyd <- sta$hyd %>% inner_join(df, by="Date")
     # sta$hyd <- sta$hyd %>% inner_join(df %>% dplyr::select(-c("Tx","Tn","Sf","Pa")), by="Date")
   }))
