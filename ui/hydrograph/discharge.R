@@ -3,6 +3,8 @@ fluidRow(
     htmlOutput('info.main'),
     dateRangeInput("dt.rng",label='select date range:'),
     checkboxInput('chk.flg','show observation flags'),
+    # shiny::includeMarkdown("md/todo.md"),
+    htmlOutput("link.shydrograph"),
     width = 2
   ),
   mainPanel(

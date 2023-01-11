@@ -27,9 +27,14 @@ flow_summary_cumu <- function(hyd,carea,title=NULL,DTrng=NULL){
   
   pwc <- piecewise.regression.line(data.frame(x=df$d,y=df$c))
   pwb <- piecewise.regression.line(data.frame(x=df$d,y=df$b))
-
-  print(pwc$brk)
-
+##################################################################################################################################
+  print('here')
+  # print(pwc$brk)
+  # print(pwb$brk)
+  # print(pwb)
+  print(length(pwc$brk$x))
+  print(length(pwb$brk$x))
+  
   p <- ggplot(df, aes(d)) +
     theme_bw() + theme(legend.position=c(0.03,0.97), legend.justification=c(0,1), legend.title=element_blank()) +
     theme(panel.grid.major = element_line(colour = "#808080"), panel.grid.minor = element_line(colour = "#808080")) +
@@ -37,10 +42,10 @@ flow_summary_cumu <- function(hyd,carea,title=NULL,DTrng=NULL){
     geom_line(aes(y=b, color="Baseflow"), size=2) +
     geom_line(aes(x=d,y=v), pwc$df, color="blue", size=1, alpha=0.7) +
     geom_line(aes(x=d,y=v), pwb$df, color="blue", size=1, alpha=0.7) +
-    geom_point(aes(x=pwc$brk$x,y=pwc$brk$y), shape=19, color="blue") +
-    geom_point(aes(x=pwb$brk$x,y=pwb$brk$y), shape=19, color="blue") +
-    geom_segment(aes(x=min(d,na.rm=TRUE),xend=max(d,na.rm=TRUE),y=0,yend=max(c,na.rm=TRUE)),size=1,linetype="dotted") + 
-    geom_segment(aes(x=min(d,na.rm=TRUE),xend=max(d,na.rm=TRUE),y=0,yend=max(b,na.rm=TRUE)),size=1,linetype="dotted") + 
+    geom_point(aes(x=pwc$brk$x,y=pwc$brk$y), shape=19, size=5, color="blue") +
+    { if (length(pwb$brk$x)>0) geom_point(aes(x=pwb$brk$x,y=pwb$brk$y), shape=19, size=5, color="blue") } +
+    geom_segment(aes(x=min(d,na.rm=TRUE),xend=max(d,na.rm=TRUE),y=0,yend=max(c,na.rm=TRUE)),size=1,linetype="dotted") +
+    geom_segment(aes(x=min(d,na.rm=TRUE),xend=max(d,na.rm=TRUE),y=0,yend=max(b,na.rm=TRUE)),size=1,linetype="dotted") +
     scale_colour_manual(values=c("Total Flow" = "#ef8a62", "Baseflow" = "#43a2ca")) +
     labs(x = NULL, y = unit) +
     scale_x_date()

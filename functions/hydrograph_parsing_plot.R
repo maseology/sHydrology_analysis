@@ -27,8 +27,8 @@ flow_hydrograph_parsed <- function(hyd,InclEV=TRUE){
       dySeries("recession", color = "green", strokeWidth=2, fillGraph = TRUE) %>%
       dySeries("falling limb", color = "blue", strokeWidth=2, fillGraph = TRUE) %>%
       dySeries("rising limb", color = "red", strokeWidth=2, fillGraph = TRUE) %>%
-      # dyBarSeries("event yield", color = "brown", axis = 'y2') %>% ### BUG: these don't seem to appear as of 191126 (see https://github.com/rstudio/dygraphs/issues/237)
-      dySeries("event yield", color = "brown", axis = 'y2', stepPlot = TRUE) %>% #, fillGraph = TRUE) %>%
+      dyBarSeries("event yield", color = "#0153c5", axis = 'y2') %>% ### BUG: these don't seem to appear as of 191126 (see https://github.com/rstudio/dygraphs/issues/237)
+      # dySeries("event yield", color = "brown", axis = 'y2', stepPlot = TRUE) %>% #, fillGraph = TRUE) %>%
       dyAxis('y', label=dylabcms) %>%
       dyAxis('y2', label='Event yield (mm)', valueRange = c(max(hyd$evnt,na.rm=T), 0)) %>%
       dyLegend(show = 'always') %>%  

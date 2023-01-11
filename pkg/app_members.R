@@ -10,6 +10,8 @@ output$hdr3 <- renderUI({shiny::HTML(paste0("<h2>&emsp;",sta$label,"</h2>"))})
 
 output$hdr.qual <- renderUI({shiny::HTML(paste0("<h3>&emsp;",sta$label,"</h3>"))})
 
+output$link.shydrograph <- renderUI({ shiny::HTML(paste0('<a href="https://owrc.shinyapps.io/shydrograph/?t=5&i=',sta$iid,'" target="_blank" rel="noopener noreferrer">open in general timeseries analysis tool</a>'))})
+
 
 ##############################################################
 ### members

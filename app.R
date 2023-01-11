@@ -5,14 +5,14 @@
 # Hydrological analysis tools
 #
 # By M. Marchildon
-# v.1.6.3
-# Apr, 2022
+# v.1.6.5
+# Dec, 2022
 ##########################################################
 
 
 source("pkg/packages.R", local = TRUE)
 source("pkg/sources.R", local = TRUE)
-sta.id <- '02EC009' #'149343' #
+sta.id.test <- NULL # '149130' # '731100016'#' '02EC009' #'149343' # 
 
 
 shinyApp(
@@ -38,7 +38,7 @@ shinyApp(
         list(tags$head(HTML('<link rel="icon", href="favicon.png",type="image/png" />'))),
         div(style="padding: 1px 0px; height: 0px", titlePanel(title="", windowTitle="sHydrology")), # height: 0px
         navbarPage(
-          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.6"),
+          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.6.5"),
           source(file.path("ui", "hydrograph.R"), local = TRUE)$value,
           source(file.path("ui", "trends.R"), local = TRUE)$value,
           source(file.path("ui", "stats.R"), local = TRUE)$value,
@@ -58,17 +58,17 @@ shinyApp(
     
     ###################
     ### (hard-coded) Load station ID:
-    if(!is.null(sta.id)) collect_hydrograph(sta.id) # for testing
+    if(!is.null(sta.id.test)) collect_hydrograph(sta.id.test) # for testing
     hide('chk.yld')
     ### Load from URL:
-    # observe({
-    #   query <- parseQueryString(session$clientData$url_search)
-    #   if (!is.null(query[['sID']])) {
-    #     collect_hydrograph(query[['sID']])
-    #   } else {
-    #     showNotification(paste0("Error: URL invalid."))
-    #   }
-    # })
+    observe({
+      query <- parseQueryString(session$clientData$url_search)
+      if (!is.null(query[['sID']])) {
+        collect_hydrograph(query[['sID']])
+      } else {
+        showNotification(paste0("Error: URL invalid."))
+      }
+    })
 
     
     ### load external code:

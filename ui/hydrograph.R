@@ -8,7 +8,7 @@ navbarMenu("Hydrograph",
  ),
  tabPanel("disaggregation",
           source(file.path("ui/hydrograph", "disaggregation.R"), local = TRUE)$value
- ),hr(),
+ ),
  tabPanel("data quality (counts)",
          source(file.path("ui/hydrograph/data", "data_qual.R"), local = TRUE)$value
  ),  

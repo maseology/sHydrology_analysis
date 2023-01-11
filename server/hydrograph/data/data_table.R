@@ -3,8 +3,9 @@
 output$tabSta <- DT::renderDataTable({
   if (!is.null(sta$info)){
     drop <- c("LOC_ID","INT_ID")
+    print(sta$info)
     df <- sta$info[,!(names(sta$info) %in% drop)] %>% 
-      rename(StationName=LOC_NAME, LongName=LOC_NAME_ALT1, latitude=LAT, longitude=LONG, DrainageArea=SW_DRAINAGE_AREA_KM2, nData=CNT, PeriodBegin=YRb, PeriodEnd=YRe, Quality=QUAL)
+      dplyr::rename(StationName=LOC_NAME, LongName=LOC_NAME_ALT1, latitude=LAT, longitude=LONG, DrainageArea=SW_DRAINAGE_AREA_KM2, nData=CNT, PeriodBegin=YRb, PeriodEnd=YRe, Quality=QUAL)
     DT::datatable(df) %>%
       formatPercentage('Quality', 0) %>%
       formatRound(c('latitude', 'longitude'), 3) %>%

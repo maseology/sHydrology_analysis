@@ -32,7 +32,7 @@ build_hydrograph <- function(sset){
   if ('BF.med' %in% sset) {
     p <- dygraph(qxts) %>%
       dySeries(c('BF.min','Flow','BF.max'),label='Discharge',strokeWidth=3) %>%
-      dySeries('BF.med',label='Median baseflow',strokeWidth=1) %>%
+      dySeries('BF.med',label='Median baseflow',strokeWidth=2) %>%
       dyOptions(axisLineWidth = 1.5) %>%
       dyAxis(name='y', label=dylabcms) %>%
       dyLegend(width = 500) %>%
