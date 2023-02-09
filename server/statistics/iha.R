@@ -212,3 +212,16 @@ output$rng.iah2 <- renderDygraph({
       dyRangeSelector(fillColor='', height=60, dateWindow=c(median(sta$hyd$Date),sta$DTe))
   }
 })
+
+
+yr.fmt <- function(odt) format(as.Date(odt), format="%Y")
+
+iha.dates <- reactive({
+  rng1 <- input$rng.iah1_date_window
+  rng2 <- input$rng.iah2_date_window
+  if (!is.null(rng1) & !is.null(rng2)) {
+    paste0("(",yr.fmt(rng1[1]),"-",yr.fmt(rng1[2])," vs. ",yr.fmt(rng2[1]),"-",yr.fmt(rng2[2]),")")
+  }
+})
+
+# (1967-1988 vs. 1989-2021)

@@ -5,14 +5,14 @@
 # Hydrological analysis tools
 #
 # By M. Marchildon
-# v.1.6.5
-# Dec, 2022
+# v.1.6.6
+# Jan, 2023
 ##########################################################
 
 
 source("pkg/packages.R", local = TRUE)
 source("pkg/sources.R", local = TRUE)
-sta.id.test <- NULL # '149130' # '731100016'#' '02EC009' #'149343' # 
+sta.id.test <- NULL # 149118 # '149130' # '731100016'#' '02EC009' #'149343' # 
 
 
 shinyApp(
@@ -38,7 +38,7 @@ shinyApp(
         list(tags$head(HTML('<link rel="icon", href="favicon.png",type="image/png" />'))),
         div(style="padding: 1px 0px; height: 0px", titlePanel(title="", windowTitle="sHydrology")), # height: 0px
         navbarPage(
-          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.6.5"),
+          title=div(img(src="ORMGP_logo_no_text_short.png", height=11), "sHydrology v1.6.6"),
           source(file.path("ui", "hydrograph.R"), local = TRUE)$value,
           source(file.path("ui", "trends.R"), local = TRUE)$value,
           source(file.path("ui", "stats.R"), local = TRUE)$value,

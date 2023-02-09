@@ -1,7 +1,7 @@
 
 fluidPage(
   title = 'Indicators of Hydrologic Alteration',
-  headerPanel('Indicators of Hydrologic Alteration'),
+  # headerPanel('Indicators of Hydrologic Alteration'),
   sidebarLayout(
     sidebarPanel(
       plotOutput("cumu.iah",height=300), br(),
@@ -12,6 +12,8 @@ fluidPage(
     ),
     mainPanel(
       fluidRow(
+        h3('Indicators of Hydrologic Alteration'),
+        htmlOutput("hdr.iha"),
         h5("NOTE: Group descriptions given below. Values shown in red show a significant change (p<0.05)"),
         h4("Group 1: Magnitude of monthly water conditions"),
         formattableOutput('tabIHA.01'),
