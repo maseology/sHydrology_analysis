@@ -15,7 +15,7 @@ fluidPage(
       column(6, plotOutput('k.coef', height = "600px")),
       column(6, plotOutput('m.coef', height = "600px"))
     ),
+    fluidRow(column(8, shiny::includeMarkdown("md/knotes.md"))),
     width = 10
-  ), br(), 
-  shiny::includeMarkdown("md/knotes.md")
+  )
 )

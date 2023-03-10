@@ -8,7 +8,7 @@ Notes:
 
 #### BFI plot:
 
-A 365-day rolling average of the baseflow index determined using the median of hydrograph separation estimates. 
+A 365-day rolling average of the baseflow index determined using the median of [hydrograph separation estimates](https://owrc.github.io/info/hydrographseparation/). 
 
 The baseflow index (BFI) is the proportion of total flow (\\(q_t\\)) composed of "baseflow" (\\(q_b\\)):
 

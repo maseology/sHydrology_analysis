@@ -51,31 +51,31 @@ flow_summary_daily <- function(hyd,carea,k=NULL,title=NULL,DTrng=NULL,minmaxmean
   return(p)  
 }
 
-flow_summary_box <- function(hyd, carea, title, DTrng=NULL) {
-  hyd <- hyd %>% mutate(Date=as.Date(Date), mnt=factor(strftime(Date, format="%b"),levels=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))) 
-  
-  if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
-  
-  unit <- 'm?/s'
-  if(!is.null(carea)){
-    hyd$Flow <- hyd$Flow * 31557.6/carea # mm/yr    
-    unit <- 'mm/yr'
-  }  
-  
-  # collect all boxplot stats for selected range
-  m1 <- matrix(nrow=12,ncol=5)
-  t1 <- by(hyd$Flow,hyd$mnt,boxplot.stats)
-  for (i in 1:12){
-    m1[i,] <- t1[[i]][[1]]
-  }
-  
-  ggplot(hyd) + 
-    theme_bw() +
-    geom_boxplot(aes(x = mnt, y = Flow), size = 1) + #, outlier.shape = NA) +
-    # coord_cartesian(ylim = c(0,max(m1[,5]))*1.05) +
-    scale_y_log10(name = paste0("Discharge (",unit,")"), sec.axis = sec_axis( trans=~.*carea/31557.6, name=gglabcms)) +
-    ggtitle(title) + xlab('Month')
-}
+# flow_summary_box <- function(hyd, carea, title, DTrng=NULL) {
+#   hyd <- hyd %>% mutate(Date=as.Date(Date), mnt=factor(strftime(Date, format="%b"),levels=c('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))) 
+#   
+#   if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
+#   
+#   unit <- 'm?/s'
+#   if(!is.null(carea)){
+#     hyd$Flow <- hyd$Flow * 31557.6/carea # mm/yr    
+#     unit <- 'mm/yr'
+#   }  
+#   
+#   # collect all boxplot stats for selected range
+#   m1 <- matrix(nrow=12,ncol=5)
+#   t1 <- by(hyd$Flow,hyd$mnt,boxplot.stats)
+#   for (i in 1:12){
+#     m1[i,] <- t1[[i]][[1]]
+#   }
+#   
+#   ggplot(hyd) + 
+#     theme_bw() +
+#     geom_boxplot(aes(x = mnt, y = Flow), size = 1) + #, outlier.shape = NA) +
+#     # coord_cartesian(ylim = c(0,max(m1[,5]))*1.05) +
+#     scale_y_log10(name = paste0("Discharge (",unit,")"), sec.axis = sec_axis( trans=~.*carea/31557.6, name=gglabcms)) +
+#     ggtitle(title) + xlab('Month')
+# }
 
 
 
@@ -102,15 +102,15 @@ output$dy.qmmm <- renderPlot({
   )
 })
 
-output$dy.qbox <- renderPlot({
-  input$mouseup
-  isolate(
-    if (!is.null(sta$hyd)){
-      rng <- input$rng.mdd_date_window
-      flow_summary_box(sta$hyd,sta$carea,sta$label,rng)
-    }
-  )
-})
+# output$dy.qbox <- renderPlot({
+#   input$mouseup
+#   isolate(
+#     if (!is.null(sta$hyd)){
+#       rng <- input$rng.mdd_date_window
+#       flow_summary_box(sta$hyd,sta$carea,sta$label,rng)
+#     }
+#   )
+# })
 
 output$rng.mdd <- renderDygraph({
   if (!is.null(sta$hyd)){

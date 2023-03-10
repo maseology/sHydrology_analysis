@@ -5,10 +5,13 @@ navbarMenu("Longterm Trends",
    tabPanel("seasonal summary",
             source(file.path("ui/trend", "seasonal.R"), local = TRUE)$value
    ),
+   tabPanel("monthly summary",
+            source(file.path("ui/trend", "monthly.R"), local = TRUE)$value
+   ),   
    tabPanel("monthly baseflow summary",
             source(file.path("ui/trend", "monthly_bf.R"), local = TRUE)$value
    ),
-   tabPanel("daily discharge summary",
+   tabPanel("daily summary",
             source(file.path("ui/trend", "daily.R"), local = TRUE)$value
    ),
    tabPanel("cumulative discharge",

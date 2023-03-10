@@ -8,8 +8,8 @@ fluidPage(
     ),
     mainPanel(
      plotOutput('dy.q'),
-     plotOutput('dy.qmmm'),
-     plotOutput('dy.qbox')
+     plotOutput('dy.qmmm')
+     # plotOutput('dy.qbox')
    )
   )  
 )

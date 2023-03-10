@@ -152,7 +152,8 @@ frequencyPlot <- function(series, years, ci, title=NULL, inverted=FALSE) {
   }
   bwpeaks$year = years
   
-  xbreaks <- c(0.002,0.01,0.1,0.25,0.5,0.8,0.9,0.95,0.975,0.99,0.995, 0.998)
+  # xbreaks <- c(0.002,0.01,0.1,0.25,0.5,0.8,0.9,0.95,0.975,0.99,0.995, 0.998)
+  xbreaks <- c(0.002,0.01,0.1,1/3,0.5,0.8,0.9,0.95,0.975,0.99,0.995, 0.998)
   log.range <- log10(range(series, ci[,ncol(ci)], na.rm = TRUE)) #ci[,1]
   lower <- 10^floor(log.range[1])
   upper <- 10^ceiling(log.range[2])

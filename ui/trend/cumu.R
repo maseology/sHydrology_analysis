@@ -1,8 +1,9 @@
 
 fluidPage(
   withMathJax(),
-  title = 'Cumulative discharge',
-  headerPanel('Cumulative discharge'),
+  titlePanel('Cumulative discharge'),
+  # title = 'Cumulative discharge',
+  # headerPanel('Cumulative discharge'),
   sidebarLayout(
     sidebarPanel(
       h4("select date range:"),

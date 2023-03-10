@@ -1,6 +1,7 @@
 
 fluidPage(
-  headerPanel('Monthly baseflow summary'),
+  titlePanel('Monthly baseflow summary'),
+  # headerPanel('Monthly baseflow summary'),
   fluidRow(
     sidebarPanel(
       h4("select date range:"),

@@ -4,6 +4,7 @@ source(file.path("server/hydrograph", "disaggregation.R"), local = TRUE)$value
 source(file.path("server/trend", "annual.R"), local = TRUE)$value
 source(file.path("server/trend", "seasonal.R"), local = TRUE)$value
 source(file.path("server/trend", "daily.R"), local = TRUE)$value
+source(file.path("server/trend", "monthly.R"), local = TRUE)$value
 source(file.path("server/trend", "monthly_bf.R"), local = TRUE)$value
 source(file.path("server/trend", "cumu.R"), local = TRUE)$value
 source(file.path("server/statistics", "peak.R"), local = TRUE)$value
