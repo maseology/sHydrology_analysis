@@ -1,20 +1,20 @@
-navbarMenu("Longterm Trends",
-   tabPanel("annual summary",
+navbarMenu("Trends",
+   tabPanel("annual series",
             source(file.path("ui/trend", "annual.R"), local = TRUE)$value
    ),
-   tabPanel("seasonal summary",
+   tabPanel("seasonal series",
             source(file.path("ui/trend", "seasonal.R"), local = TRUE)$value
    ),
-   tabPanel("monthly summary",
+   tabPanel("monthly",
             source(file.path("ui/trend", "monthly.R"), local = TRUE)$value
    ),   
-   tabPanel("monthly baseflow summary",
+   tabPanel("monthly, baseflow",
             source(file.path("ui/trend", "monthly_bf.R"), local = TRUE)$value
    ),
-   tabPanel("daily summary",
+   tabPanel("daily",
             source(file.path("ui/trend", "daily.R"), local = TRUE)$value
    ),
-   tabPanel("cumulative discharge",
+   tabPanel("cumulative",
             source(file.path("ui/trend", "cumu.R"), local = TRUE)$value
    )
 )

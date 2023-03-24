@@ -1,6 +1,6 @@
 
 fluidPage(
-  titlePanel('Monthly summary'),
+  titlePanel('Monthly distribution'),
   fluidRow(
     sidebarPanel(
      h4("select date range:"),

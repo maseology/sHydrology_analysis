@@ -25,6 +25,7 @@ flow_summary_daily <- function(hyd,carea,k=NULL,title=NULL,DTrng=NULL,minmaxmean
   df$doy <- as.Date(df$doy - 1, origin = "2008-01-01")
   
   if (minmaxmean) {
+    plotnam = "Range of observed mean-daily discharge"
     p <- ggplot(df,aes(doy)) +
       theme_bw() + theme(legend.position=c(0.03,0.8), legend.justification=c(0,0), legend.title=element_blank(),
                          legend.background = element_rect(fill=alpha('white', 0.4))) +
@@ -35,6 +36,7 @@ flow_summary_daily <- function(hyd,carea,k=NULL,title=NULL,DTrng=NULL,minmaxmean
       scale_x_date(date_labels="%b", date_breaks = 'month') +
       labs(y = paste0("Discharge (",unit,")"), x='Day of year')    
   } else {
+    plotnam = "Julian-day mean of mean-daily discharge"
     p <- ggplot(df,aes(doy)) +
       theme_bw() + theme(legend.position=c(0.03,0.03), legend.justification=c(0,0), legend.title=element_blank(),
                          legend.background = element_rect(fill=alpha('white', 0.4))) +
@@ -46,7 +48,7 @@ flow_summary_daily <- function(hyd,carea,k=NULL,title=NULL,DTrng=NULL,minmaxmean
   
   if(!is.null(carea)) p <- p + scale_y_continuous(sec.axis = sec_axis( trans=~.*carea/31557.6, name=gglabcms) )
   
-  if(!is.null(title)) p <- p + ggtitle(title)
+  if(!is.null(title)) p <- p + ggtitle(paste0(plotnam,"\n",title))
   
   return(p)  
 }

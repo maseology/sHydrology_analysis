@@ -110,11 +110,48 @@ output$BFI.mnt <- renderPlot({
 output$rng.bf <- renderDygraph({
   if (!is.null(sta$hyd)){
     if (!sta$BFbuilt) separateHydrograph()
-    qxts <- xts(sta$hyd$Flow, order.by = sta$hyd$Date)
-    colnames(qxts) <- 'Discharge'
+    qxts <- xts(cbind(sta$hyd$Flow, sta$hyd$BF.med), order.by = sta$hyd$Date)
+    colnames(qxts) <- c('Discharge','Baseflow')
     dygraph(qxts) %>%
       dyOptions(axisLineWidth = 1.5, fillGraph = TRUE, stepPlot = TRUE) %>%
       dyAxis(name='y', label=dylabcms) %>%
       dyRangeSelector(fillColor='', height=80)
   }
+})
+
+output$tab.mntbf <- renderFormattable({
+  req(rng <- input$rng.bf_date_window)
+  if (!is.null(sta$hyd)){
+    if (!sta$BFbuilt) separateHydrograph()
+    sta$hyd[sta$hyd$Date >= rng[1] & sta$hyd$Date <= rng[2],] %>%
+      mutate(Month=month(Date)) %>%
+      group_by(Month) %>%
+      dplyr::summarise(mean = mean(BF.med,na.rm=TRUE),
+                       st.Dev = sd(BF.med,na.rm=TRUE),
+                       p5 = quantile(BF.med,.05,na.rm=TRUE),
+                       median = median(BF.med,na.rm=TRUE),
+                       p95 = quantile(BF.med,.95,na.rm=TRUE),
+                       n = sum(!is.na(BF.med)),
+                       .groups = "keep") %>%     
+      ungroup()%>%
+      mutate(Month=month.abb[Month]) %>%
+      formattable()
+  }
+})
+
+output$info.mntbf <- renderUI({
+  req(rng <- input$rng.bf_date_window)
+  DTb <- as.Date(strftime(rng[[1]], "%Y-%m-%d"))
+  DTe <- as.Date(strftime(rng[[2]], "%Y-%m-%d"))
+  isolate({
+    por <- as.integer(difftime(DTe, DTb, units = "days"))
+    shiny::HTML(paste0(
+      '<body>',
+      paste0(
+        '<div><h4>Baseflow distribution summary:</h4></div>',
+        sta$label,';  ',strftime(DTb, "%b %Y"),' to ',strftime(DTe, "%b %Y"),' (',por+1,' days)</div>'
+      ),
+      '</body>'
+    ))
+  })
 })

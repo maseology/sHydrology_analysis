@@ -1,17 +1,19 @@
 
 fluidPage(
-  titlePanel('Monthly baseflow summary'),
+  titlePanel('Monthly distribution of baseflow'),
   # headerPanel('Monthly baseflow summary'),
   fluidRow(
     sidebarPanel(
       h4("select date range:"),
-      dygraphOutput("rng.bf")
+      dygraphOutput("rng.bf"), br(),
+      shiny::includeMarkdown("md/bfmntnotes.md") 
     ),
     mainPanel(
       column(6, plotOutput('BF.mnt')),
       column(6, plotOutput('BFI.mnt')), br(),
-      shiny::includeMarkdown("md/rightclick.md"), br(),
-      shiny::includeMarkdown("md/bfmntnotes.md") 
+      shiny::includeMarkdown("md/rightclick.md"), br(), 
+      htmlOutput('info.mntbf'),
+      fluidRow(formattableOutput('tab.mntbf'))
     )
   )
 )

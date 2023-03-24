@@ -1,6 +1,6 @@
 
 fluidPage(
-  titlePanel('Mean-daily discharge'),
+  titlePanel('Distributions of mean-daily discharge'),
   fluidRow(
     sidebarPanel(
      h4("select date range:"),
