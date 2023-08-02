@@ -1,4 +1,5 @@
 \bak
+\old
 \test
 *.sqlite3
 *.Rproj
@@ -42,3 +43,4 @@ vignettes/*.pdf
 .Rproj.user
 *-CONFLICT-*
 rsconnect/
+old/

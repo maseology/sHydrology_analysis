@@ -4,7 +4,8 @@ fluidPage(
   fluidRow(
     sidebarPanel(
      h4("select date range:"),
-     dygraphOutput("rng.mdd")
+     dygraphOutput("rng.mdd"), br(),
+     shiny::includeMarkdown("md/dtrng.md")
     ),
     mainPanel(
      plotOutput('dy.q'),

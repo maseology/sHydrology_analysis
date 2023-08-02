@@ -1,0 +1,2 @@
+
+Boxpots follow the method of McGill et.al. (1978): box represents the 25% to 75% quantile, while the centre line represents median (50% quantile). Whiskers represent the observation less than or equal to the box extents ±1.5 * IQR (inter-quartile range).

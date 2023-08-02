@@ -22,6 +22,7 @@ output$link.shydrograph <- renderUI({ shiny::HTML(paste0('<a href="https://owrc.
 sta <- reactiveValues(lid=NULL, iid=NULL, name=NULL, name2=NULL, 
                       carea=NULL, k=NULL, hyd=NULL,
                       DTb=NULL, DTe=NULL, label=NULL, info.html=NULL, 
+                      LONG=NULL, LAT=NULL, 
                       info=NULL, BFbuilt=FALSE, HPbuilt=FALSE)
 
 sta.fdc <- reactiveValues(cmplt=NULL,prtl=NULL)

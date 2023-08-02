@@ -1,6 +1,7 @@
 navbarMenu("Hydrograph",
- tabPanel("raw queried data",
+# tabPanel("raw queried data",
 #           # tags$head(tags$script(HTML(jscode.mup))),
+ tabPanel("daily-mean data",
           source(file.path("ui/hydrograph", "discharge.R"), local = TRUE)$value
  ),
  tabPanel("(baseflow) separation",

@@ -10,10 +10,12 @@ fluidRow(
   mainPanel(
     tabsetPanel(type = "tabs",
                 tabPanel("Dynamic", dygraphOutput("dyhydgrph")),
-                tabPanel("Printable", plotOutput("gghydgrph"))
+                tabPanel("Printable", plotOutput("gghydgrph")),
+                tabPanel("Map", leafletOutput("leaflet", height = "600px"))
     ), br(),
     column(6, plotOutput('fdc')),
     column(6, plotOutput('mnt.q')),
     width = 10
   )
 )
+

@@ -8,7 +8,8 @@ tabPanel("About",
   fluidPage(
     column(2),
     column(8, 
-           shiny::includeMarkdown("md/about.md")
+           shiny::includeMarkdown("md/about.md"),
+           shiny::includeMarkdown("md/references.md")
            )
   )
 )

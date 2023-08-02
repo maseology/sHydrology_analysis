@@ -24,9 +24,9 @@ flow_hydrograph_parsed <- function(hyd,InclEV=TRUE){
     qx <- cbind(x2,x3,x1,xe)
     colnames(qx) <- c('falling limb','recession','rising limb','event yield')
     p <- dygraph(qx) %>%
-      dySeries("recession", color = "green", strokeWidth=2, fillGraph = TRUE) %>%
-      dySeries("falling limb", color = "blue", strokeWidth=2, fillGraph = TRUE) %>%
-      dySeries("rising limb", color = "red", strokeWidth=2, fillGraph = TRUE) %>%
+      dySeries("recession", color = "green", strokeWidth=2) %>% #, fillGraph = TRUE) %>%
+      dySeries("falling limb", color = "blue", strokeWidth=2) %>% #, fillGraph = TRUE) %>%
+      dySeries("rising limb", color = "red", strokeWidth=2) %>% #, fillGraph = TRUE) %>%
       dyBarSeries("event yield", color = "#0153c5", axis = 'y2') %>% ### BUG: these don't seem to appear as of 191126 (see https://github.com/rstudio/dygraphs/issues/237)
       # dySeries("event yield", color = "brown", axis = 'y2', stepPlot = TRUE) %>% #, fillGraph = TRUE) %>%
       dyAxis('y', label=dylabcms) %>%

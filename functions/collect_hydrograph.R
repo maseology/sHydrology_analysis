@@ -8,7 +8,7 @@ collect_hydrograph <- function(LOC_ID) {
     info <- qStaInfo(ldbc, sta$lid)
     
     if (is.null(info)) showNotification(paste0("Error LOC_ID: ",sta$lid," not found."))
-    info.main <- info[info$LOC_ID==LOC_ID,] #################  mm: currently LOC_ID picked, should we default to master loc??????
+    info.main <- info[info$LOC_ID==LOC_ID,] ##################  mm: currently LOC_ID picked, should we default to master loc??????
     # info <- info.main # for testing
     sta$info <- info
     sta$carea <- info.main$SW_DRAINAGE_AREA_KM2
@@ -16,6 +16,8 @@ collect_hydrograph <- function(LOC_ID) {
     sta$iid <- info.main$INT_ID
     sta$name <- info.main$LOC_NAME
     sta$name2 <- info.main$LOC_NAME_ALT1
+    sta$LONG <- info.main$LONG
+    sta$LAT <- info.main$LAT
     sta$label <- paste0(sta$name,': ',sta$name2)
     if (nrow(info)>1) {
       showNotification("aggregating co-located stations")
@@ -23,7 +25,7 @@ collect_hydrograph <- function(LOC_ID) {
       sta$label <- paste0(sta$label,' (AGGREGATED)')
     }
     setProgress(message = 'querying databases..',value=0.45)
-    sta$hyd <- qTemporal(idbc,info$INT_ID)
+    sta$hyd <- qTemporal(idbc,info$INT_ID) %>% filter(Flow>=0)
     setProgress(message = 'rendering plot..',value=0.65)
     
     if (nrow(sta$hyd)<=0) showNotification(paste0("Error no data found for ",sta$name2))

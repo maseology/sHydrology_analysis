@@ -11,7 +11,7 @@ baseflow_boxplot <- function(hyd,carea,k=NULL,title=NULL, DTrng=NULL){
     hyd$BF.med <- hyd$BF.med * 2592/carea # mm/30 days
     unit <- 'mm' #'mm/month'
   }
-  print(DTrng)
+  # print(DTrng)
   # if(!is.null(DTrng)) hyd <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
   hyd2 <- hyd[hyd$Date >= DTrng[1] & hyd$Date <= DTrng[2],]
   

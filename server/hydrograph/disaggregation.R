@@ -11,3 +11,23 @@ output$hydgrph.prse <- renderDygraph({isolate(
     })
   }
 )})
+
+
+
+output$hydgrph.prse.scatter <- renderPlot({
+  if (!is.null(sta$hyd$qtyp)){
+    sta$hyd %>%
+      mutate(new = ifelse(evnt > 0, 1, 0)) %>%
+      mutate(new2 = cumsum(new)) %>%
+      group_by(new2) %>%
+      mutate(pevnt=sum(Rf+Sm, na.rm = TRUE)) %>%
+      ungroup() %>%
+      filter(new==1) %>%
+      ggplot(aes(pevnt,evnt)) +
+        theme_bw() + 
+        geom_abline(slope=1,intercept=0, alpha=.5, linetype='dashed') +
+        geom_point() + 
+        labs(x="Atmospheric yield", y="Event (discharge) yield")
+        coord_fixed()
+  }
+})
