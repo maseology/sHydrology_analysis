@@ -37,5 +37,4 @@ BFp <- list(LHa=0.925, LHp=3, BFIx=0.8, JHC=0.3) # default baseflow parameters
 source(file.path("functions", "collect_hydrograph.R"), local = TRUE)$value
 source(file.path("functions", "separateHydrograph.R"), local = TRUE)$value
 source(file.path("functions", "daterange.R"), local = TRUE)$value
-source(file.path("functions", "owrc-api.R"), local = TRUE)$value
 

@@ -1,6 +1,6 @@
 ##########################################################
 ##################### sHydrology ######################### 
-#### A Shiny-Leaflet interface to the YPDT database.  ####
+#### A Shiny-Leaflet interface to the HYDAT database. ####
 ##########################################################
 # Hydrological analysis tools
 #
@@ -12,7 +12,9 @@
 
 source("pkg/packages.R", local = TRUE)
 source("pkg/sources.R", local = TRUE)
-sta.id.test <- NULL # 731100016 # '149343' # '02EC009' # '149130' # 149118 # 2147456340 # 
+
+
+sta.id <- '02EC009'  # User must set the HYDAT station name here
 
 
 shinyApp(
@@ -59,17 +61,17 @@ shinyApp(
     
     ###################
     ### (hard-coded) Load station ID:
-    if(!is.null(sta.id.test)) collect_hydrograph(sta.id.test) # for testing
+    if(!is.null(sta.id)) collect_hydrograph(sta.id) # for testing
     hide('chk.yld')
-    ### Load from URL:
-    observe({
-      query <- parseQueryString(session$clientData$url_search)
-      if (!is.null(query[['sID']])) {
-        collect_hydrograph(query[['sID']])
-      } else {
-        showNotification(paste0("Error: URL invalid."))
-      }
-    })
+    # ### Load from URL:
+    # observe({
+    #   query <- parseQueryString(session$clientData$url_search)
+    #   if (!is.null(query[['sID']])) {
+    #     collect_hydrograph(query[['sID']])
+    #   } else {
+    #     showNotification(paste0("Error: URL invalid."))
+    #   }
+    # })
 
     
     ### load external code:

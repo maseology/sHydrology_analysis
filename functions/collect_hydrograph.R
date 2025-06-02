@@ -8,7 +8,7 @@ collect_hydrograph <- function(LOC_ID) {
     info <- qStaInfo(ldbc, sta$lid)
     
     if (is.null(info)) showNotification(paste0("Error LOC_ID: ",sta$lid," not found."))
-    info.main <- info[info$LOC_ID==LOC_ID,] ##################  mm: currently LOC_ID picked, should we default to master loc??????
+    info.main <- info[info$LOC_ID==LOC_ID,]
     # info <- info.main # for testing
     sta$info <- info
     sta$carea <- info.main$SW_DRAINAGE_AREA_KM2

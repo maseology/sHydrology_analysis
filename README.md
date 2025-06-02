@@ -1,5 +1,7 @@
 # sHyStreamflow (formerly sHydrology Analysis)
 
+> NOTE: this code will see little support going forward. The active repo can be found [here](https://github.com/OWRC/sHyStreamflow).
+
 A Shiny-Leaflet interface to a stream flow database and companion to [sHydrology (map)](https://github.com/maseology/sHydrology).
 
 Currently built to view WSC HYDAT (sqlite3 format) stream flow data [click here](http://collaboration.cmc.ec.gc.ca/cmc/hydrometrics/www/).
@@ -54,8 +56,8 @@ Further details can be read in [sHydrologyUM.pdf](/doc/sHydrologyUM.pdf). *(..to
 ### Automatic recession coefficient computation:
 Two forms of streamflow recession coefficients are computed automatically using iterative procedures: 
 
-1. The (<img src="https://render.githubusercontent.com/render/math?math=b_t=kb_{t-1}">; Linsley et.al., 1975) recession curve is positioned to envelope the log-transformed discharge data versus subsequent discharge, on the condition that the former exceeds the latter.
-1. The first-order (inverse) hyperbolic stream flow recession coefficient of the form: <img src="https://render.githubusercontent.com/render/math?math=\frac{1}{Q}-\frac{1}{Q_0}=\frac{t}{m}">. The inverse of the slope of this function yields a first-cut estimate of the *m* parameter used in TOPMODEL (Beven and Kirkby, 1979).
+1. The ($b_t=kb_{t-1}$; Linsley et.al., 1975) recession curve is positioned to envelope the log-transformed discharge data versus subsequent discharge, on the condition that the former exceeds the latter.
+1. The first-order (inverse) hyperbolic stream flow recession coefficient of the form: $\frac{1}{Q}-\frac{1}{Q_0}=\frac{t}{m}$. The inverse of the slope of this function yields a first-cut estimate of the *m* parameter used in TOPMODEL (Beven and Kirkby, 1979).
 
 The recession coefficient *k* is the inverse of the slope of the computed recession curve. 
 
